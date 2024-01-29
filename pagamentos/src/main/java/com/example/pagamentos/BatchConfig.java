@@ -79,10 +79,12 @@ public class BatchConfig {
         // aqui iremos configurar o processador que processara uma transacaoCNAB em uma transacao. Mas como estamos record (que sao imutaveis). Para isso, utilizaremos o Wither Pattern -> crio um metodo que recria a transacao, mudando apenas a prorpiedade que quero mudar. Portanto, iremos criar uma Transacao com todos valores iguais, mudando apenas a propriedade valor.
         
         return item -> {
-            var transacao = new Transacao(null, item.tipo(), null, null, item.cpf(), item.cartao(), null, item.donoDaLoja().trim(), item.nomeDaLoja().trim())
-            .withValor(
-                item.valor().divide(BigDecimal.valueOf(100)))
+            var transacao = new Transacao(
+                null, item.tipo(), null,
                 // multipliquei por 100 pela especificaca do desafio. Farei o msm para data e hora
+                item.valor().divide(BigDecimal.valueOf(100)), 
+                item.cpf(), item.cartao(), null,
+                item.donoDaLoja().trim(), item.nomeDaLoja().trim())
             .withData(item.data())
             .withHora(item.hora());
 
