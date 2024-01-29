@@ -1,4 +1,4 @@
-package com.example.pagamentos;
+package com.example.pagamentos.entities;
 
 import java.math.BigDecimal;
 

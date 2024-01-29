@@ -1,4 +1,4 @@
-package com.example.pagamentos;
+package com.example.pagamentos.job;
 
 import java.math.BigDecimal;
 
@@ -6,8 +6,11 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
@@ -18,10 +21,16 @@ import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilde
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.transform.Range;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import com.example.pagamentos.entities.Transacao;
+import com.example.pagamentos.entities.TransacaoCNAB;
 
 @Configuration
 public class BatchConfig {
@@ -53,11 +62,14 @@ public class BatchConfig {
     }
 
     // logica de leitura que ira retornar um objeto preenchido, que sera processado
+    @StepScope 
     @Bean
-    FlatFileItemReader<TransacaoCNAB> reader() {
+    FlatFileItemReader<TransacaoCNAB> reader(
+        // Obtendo os parametros do job com colchetes. Ou seja, obtido do jobParameters e injetado automaticamente no Resource. A injecao so ocorrera quando os parametros estiverem disponiveis - para isso, StepScoe
+        @Value("#{jobParameters['cnabFile']}") Resource resource) {
         return new FlatFileItemReaderBuilder<TransacaoCNAB>()
             .name("reader")
-            .resource(new FileSystemResource("files/CNAB.txt"))
+            .resource(resource)
             .fixedLength()
             .columns(
                 new Range(1, 1), new Range(2, 9),
@@ -110,6 +122,15 @@ public class BatchConfig {
                     .beanMapped()
                     .build();
         
+    }
+
+    @Bean
+    JobLauncher jobLauncherAsync(JobRepository jobRepository) throws Exception {
+        var jobLauncher = new TaskExecutorJobLauncher();
+        jobLauncher.setJobRepository(jobRepository);
+        jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
+        jobLauncher.afterPropertiesSet();
+        return jobLauncher;
     }
 
 
