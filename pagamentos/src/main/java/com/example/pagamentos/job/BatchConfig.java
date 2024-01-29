@@ -29,6 +29,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.example.pagamentos.entities.TipoTransacao;
 import com.example.pagamentos.entities.Transacao;
 import com.example.pagamentos.entities.TransacaoCNAB;
 
@@ -91,10 +92,16 @@ public class BatchConfig {
         // aqui iremos configurar o processador que processara uma transacaoCNAB em uma transacao. Mas como estamos record (que sao imutaveis). Para isso, utilizaremos o Wither Pattern -> crio um metodo que recria a transacao, mudando apenas a prorpiedade que quero mudar. Portanto, iremos criar uma Transacao com todos valores iguais, mudando apenas a propriedade valor.
         
         return item -> {
+            var tipoTransacao = TipoTransacao.findByTipo(item.tipo());
+            var valorNormalizado = item.valor()
+            // multipliquei por 100 pela especificaca do desafio. Farei o msm para data e hora
+                .divide(new BigDecimal(100))
+                .multiply(tipoTransacao.getSinal());
+
+            // Wither pattern
             var transacao = new Transacao(
                 null, item.tipo(), null,
-                // multipliquei por 100 pela especificaca do desafio. Farei o msm para data e hora
-                item.valor().divide(BigDecimal.valueOf(100)), 
+                valorNormalizado,
                 item.cpf(), item.cartao(), null,
                 item.donoDaLoja().trim(), item.nomeDaLoja().trim())
             .withData(item.data())
