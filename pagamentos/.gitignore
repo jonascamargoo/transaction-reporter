@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+challenge.md
+doc.txt
+application.properties

@@ -1,4 +1,4 @@
-package com.example.pagamentos.services;
+package com.example.reporter.services;
 
 
 import java.math.BigDecimal;
@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.pagamentos.entities.TransactionReport;
-import com.example.pagamentos.repository.TransactionRepository;
+import com.example.reporter.entities.TransactionReport;
+import com.example.reporter.repository.TransactionRepository;
 
 @Service
 public class TransactionService {

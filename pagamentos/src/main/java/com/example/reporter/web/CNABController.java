@@ -1,4 +1,4 @@
-package com.example.pagamentos.web;
+package com.example.reporter.web;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.pagamentos.services.CNABFileProcessingService;
+import com.example.reporter.services.CNABFileProcessingService;
 
 
 @RestController

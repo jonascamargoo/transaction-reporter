@@ -16,9 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.pagamentos.entities.Transaction;
-import com.example.pagamentos.repository.TransactionRepository;
-import com.example.pagamentos.services.TransactionService;
+import com.example.reporter.entities.Transaction;
+import com.example.reporter.repository.TransactionRepository;
+import com.example.reporter.services.TransactionService;
 
 @ExtendWith(MockitoExtension.class) //Junit5
 public class TransactionServiceTest {

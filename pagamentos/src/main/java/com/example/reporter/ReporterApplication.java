@@ -1,13 +1,13 @@
-package com.example.pagamentos;
+package com.example.reporter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PagamentosApplication {
+public class ReporterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PagamentosApplication.class, args);
+		SpringApplication.run(ReporterApplication.class, args);
 	}
 
 }

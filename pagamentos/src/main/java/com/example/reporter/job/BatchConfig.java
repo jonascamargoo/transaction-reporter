@@ -1,4 +1,4 @@
-package com.example.pagamentos.job;
+package com.example.reporter.job;
 
 import java.math.BigDecimal;
 
@@ -28,9 +28,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.example.pagamentos.entities.TransactionType;
-import com.example.pagamentos.entities.Transaction;
-import com.example.pagamentos.entities.Remittance;
+import com.example.reporter.entities.Remittance;
+import com.example.reporter.entities.Transaction;
+import com.example.reporter.entities.TransactionType;
 
 @Configuration
 public class BatchConfig {

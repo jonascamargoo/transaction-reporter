@@ -1,4 +1,4 @@
-package com.example.pagamentos.entities;
+package com.example.reporter.entities;
 
 import java.math.BigDecimal;
 import java.util.List;

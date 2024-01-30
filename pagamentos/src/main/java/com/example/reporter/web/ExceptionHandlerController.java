@@ -1,4 +1,4 @@
-package com.example.pagamentos.web;
+package com.example.reporter.web;
 
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.http.HttpStatus;
