@@ -28,13 +28,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.example.pagamentos.entities.TipoTransacao;
-import com.example.pagamentos.entities.Transacao;
-import com.example.pagamentos.entities.TransacaoCNAB;
+import com.example.pagamentos.entities.TransactionType;
+import com.example.pagamentos.entities.Transaction;
+import com.example.pagamentos.entities.Remittance;
 
 @Configuration
 public class BatchConfig {
     private PlatformTransactionManager platformTransactionManager;
+    // Jobs are based on state machines. The metadata for each step resides in the jobRepository.
     private JobRepository jobRepository;
 
     public BatchConfig(PlatformTransactionManager platformTransactionManager, JobRepository jobRepository) {
@@ -45,99 +46,113 @@ public class BatchConfig {
     @Bean
     Job job(Step step) {
         return new JobBuilder("job", jobRepository)
+                // first step to be executed
                 .start(step)
+                // The incrementer is used to allow the job to run more than once during this testing phase
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
 
-    // dividindo pedaço a pedaço do processamento e definir o que queremos
+    // Breaking down the processing piece by piece and defining what we want - Batch works with large data and we gonna count transaction by transaction
     @Bean
-    Step step(ItemReader<TransacaoCNAB> itemReader, ItemProcessor<TransacaoCNAB, Transacao> itemProcessor, ItemWriter<Transacao> itemWriter) {
+    Step step(
+            ItemReader<Remittance> itemReader,
+            ItemProcessor<Remittance, Transaction> itemProcessor,
+            ItemWriter<Transaction> itemWriter) {
         return new StepBuilder("step", jobRepository)
-                .<TransacaoCNAB, Transacao>chunk(1000, platformTransactionManager)
+                .<Remittance, Transaction>chunk(1000, platformTransactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
                 .build();
     }
 
-    // logica de leitura que ira retornar um objeto preenchido, que sera processado
-    @StepScope 
+    // Logic to read the remittance file
+
+    @StepScope
+    // Retrieving job parameters using brackets. In other words, obtained from
+    // jobParameters
+    // and automatically injected into the Resource. Injection will only occur when
+    // the
+    // parameters are available - for that, StepScope
     @Bean
-    FlatFileItemReader<TransacaoCNAB> reader(
-        // Obtendo os parametros do job com colchetes. Ou seja, obtido do jobParameters e injetado automaticamente no Resource. A injecao so ocorrera quando os parametros estiverem disponiveis - para isso, StepScoe
-        @Value("#{jobParameters['cnabFile']}") Resource resource) {
-        return new FlatFileItemReaderBuilder<TransacaoCNAB>()
-            .name("reader")
-            .resource(resource)
-            .fixedLength()
-            .columns(
-                new Range(1, 1), new Range(2, 9),
-                new Range(10, 19), new Range(20, 30),
-                new Range(31, 42), new Range(43, 48),
-                new Range(49, 62), new Range(63, 80)
-            )
-            .names(
-                "tipo", "data", "valor", "cpf",
-                "cartao", "hora", "donoDaLoja", "nomeDaLoja"
-            )
-            .targetType(TransacaoCNAB.class)
-            .build();
-            
+    FlatFileItemReader<Remittance> reader(@Value("#{jobParameters['cnabFile']}") Resource resource) {
+        return new FlatFileItemReaderBuilder<Remittance>()
+                .name("reader")
+                .resource(resource)
+                .fixedLength()
+                .columns(
+                        new Range(1, 1), new Range(2, 9),
+                        new Range(10, 19), new Range(20, 30),
+                        new Range(31, 42), new Range(43, 48),
+                        new Range(49, 62), new Range(63, 80))
+                .names(
+                        "type", "date", "value", "cpf",
+                        "card", "hour", "storeOwner", "storeName")
+                .targetType(Remittance.class)
+                .build();
     }
 
+    // Logic to process the remittance file into a return file
+
     @Bean
-    ItemProcessor<TransacaoCNAB, Transacao> processor() {
-        // aqui iremos configurar o processador que processara uma transacaoCNAB em uma transacao. Mas como estamos record (que sao imutaveis). Para isso, utilizaremos o Wither Pattern -> crio um metodo que recria a transacao, mudando apenas a prorpiedade que quero mudar. Portanto, iremos criar uma Transacao com todos valores iguais, mudando apenas a propriedade valor.
-        
+    ItemProcessor<Remittance, Transaction> processor() {
+        // Converting .REM to .RET
+        // Here we will configure the processor that will handle a
+        // Remittance into a Transaction. However, as we are dealing with
+        // records (which are immutable), we will use the Wither Pattern -> I create a
+        // method that
+        // recreates the transaction, changing only the property I want to modify.
+        // Therefore,
+        // we will create a Transaction with all values the same, changing only the
+        // value property.
         return item -> {
-            var tipoTransacao = TipoTransacao.findByTipo(item.tipo());
-            var valorNormalizado = item.valor()
-            // multipliquei por 100 pela especificaca do desafio. Farei o msm para data e hora
-                .divide(new BigDecimal(100))
-                .multiply(tipoTransacao.getSinal());
-
+            var transactionType = TransactionType.findByType(item.type());
+            // I divided by 100 due to the challenge specification. I will do the same for
+            // date and time
+            var withNormalizedValue = item.value()
+                    .divide(new BigDecimal(100))
+                    .multiply(transactionType.getSinal());
             // Wither pattern
-            var transacao = new Transacao(
-                null, item.tipo(), null,
-                valorNormalizado,
-                item.cpf(), item.cartao(), null,
-                item.donoDaLoja().trim(), item.nomeDaLoja().trim())
-            .withData(item.data())
-            .withHora(item.hora());
+            var transaction = new Transaction(
+                    null, item.type(), null,
+                    withNormalizedValue, item.cpf(), item.card(),
+                    null, item.storeOwner().trim(), item.storeName().trim())
+                    .withDate(item.date())
+                    .withHour(item.hour());
+            return transaction;
 
-            return transacao;
-            
         };
     }
 
     @Bean
-    JdbcBatchItemWriter<Transacao> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Transacao>()
-            .dataSource(dataSource)
-            // em batch sempre queremos uma performance alta, entao utilizarei sql puro
-            .sql("""
-                    INSERT INTO transacao (
-                        tipo, data, valor, cpf, cartao,
-                        hora, dono_loja, nome_loja
-                    ) VALUES (
-                        :tipo, :data, :valor, :cpf, :cartao, :hora, :donoDaLoja, :nomeDaLoja
-                    )
-                    """)
-                    //adicionei os placeholders com o mesmo nome, para utilizar o beanMapped para preencher automaticamente o valor da transacao recebida
-                    .beanMapped()
-                    .build();
-        
+    JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Transaction>()
+                .dataSource(dataSource)
+                // In batch processing, we always aim for high performance, so I will use raw
+                // SQL
+                .sql("""
+                        INSERT INTO transaction (
+                            type, date, value, cpf, card,
+                            hour, store_owner, store_name
+                        ) VALUES (
+                            :type, :date, :value, :cpf, :card, :hour, :storeOwner, :storeName
+                        )
+                        """)
+                // I added placeholders with the same name to use beanMapped for
+                // automatically filling in the value of the received transaction
+                .beanMapped()
+                .build();
     }
 
+    // ENTENDER!
     @Bean
-    JobLauncher jobLauncherAsync(JobRepository jobRepository) throws Exception {
+    JobLauncher jobLauncherAsync(JobRepository jobRepository) throws Exception  {
         var jobLauncher = new TaskExecutorJobLauncher();
         jobLauncher.setJobRepository(jobRepository);
         jobLauncher.setTaskExecutor(new SimpleAsyncTaskExecutor());
         jobLauncher.afterPropertiesSet();
         return jobLauncher;
     }
-
 
 }

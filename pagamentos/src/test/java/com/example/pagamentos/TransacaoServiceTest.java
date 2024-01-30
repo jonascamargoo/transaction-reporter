@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.pagamentos.entities.Transacao;
 import com.example.pagamentos.repository.TransacaoRepository;
-import com.example.pagamentos.service.TransacaoService;
+import com.example.pagamentos.services.TransacaoService;
 
 @ExtendWith(MockitoExtension.class) //Junit5
 public class TransacaoServiceTest {

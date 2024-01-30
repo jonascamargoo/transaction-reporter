@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.pagamentos.service.CNABService;
+import com.example.pagamentos.services.CNABFileProcessingService;
 
 
 @RestController
 @RequestMapping("cnab")
 public class CNABController {
 
-    private final CNABService cnabService;
+    private final CNABFileProcessingService cnabFileProcessingService;
 
-    public CNABController(CNABService cnabService) {
-        this.cnabService = cnabService;
+    public CNABController(CNABFileProcessingService cnabFileProcessingService) {
+        this.cnabFileProcessingService = cnabFileProcessingService;
     }
 
     // testei com curl -X POST -F "file=@CNAB.txt" http://localhost:8080/cnab/upload
     
     @PostMapping("upload")
     public String upload(@RequestParam("file") MultipartFile file) throws IllegalStateException, IOException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
-        cnabService.uploadCNABFile(file);
+        cnabFileProcessingService.uploadCNABFile(file);
         return "Processamento iniciado em background!";
     }
 

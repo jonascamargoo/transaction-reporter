@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.pagamentos.entities.TransacaoReport;
-import com.example.pagamentos.service.TransacaoService;
+import com.example.pagamentos.entities.TransactionReport;
+import com.example.pagamentos.services.TransacaoService;
 
 @RestController
 @RequestMapping("transacoes")     // curl http://localhost:8080/transacoes | json_pp
@@ -19,7 +19,7 @@ public class TransacaoController {
     }
     
     @GetMapping
-    List<TransacaoReport> listAll() {
-        return transacaoService.listTotaisTransacoesPorNomeDaLoja();
+    List<TransactionReport> listAll() {
+        return transacaoService.listsTotalTransactionsByStoreName();
     }
 }
