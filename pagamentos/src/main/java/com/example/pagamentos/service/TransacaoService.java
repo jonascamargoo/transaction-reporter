@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.pagamentos.entities.TipoTransacao;
 import com.example.pagamentos.entities.TransacaoReport;
 import com.example.pagamentos.repository.TransacaoRepository;
 
