@@ -11,7 +11,7 @@ public record TransactionReport(
         // Wither Pattern
         
         public TransactionReport addTotal(BigDecimal value) {
-            return new TransactionReport(storeName, value, transactions);
+            return new TransactionReport(storeName, total.add(value), transactions);
         }
 
         public TransactionReport addTransaction(Transaction transaction) {

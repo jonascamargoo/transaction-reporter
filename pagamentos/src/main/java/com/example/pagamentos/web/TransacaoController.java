@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pagamentos.entities.TransactionReport;
-import com.example.pagamentos.services.TransacaoService;
+import com.example.pagamentos.services.TransactionService;
 
 @RestController
 @RequestMapping("transacoes")     // curl http://localhost:8080/transacoes | json_pp
 public class TransacaoController {
-    private TransacaoService transacaoService;
+    private TransactionService transactionService;
 
-    public TransacaoController(TransacaoService transacaoService) {
-        this.transacaoService = transacaoService;
+    public TransacaoController(TransactionService transactionService) {
+        this.transactionService = transactionService;
     }
     
     @GetMapping
     List<TransactionReport> listAll() {
-        return transacaoService.listsTotalTransactionsByStoreName();
+        return transactionService.listTotalTransactionsByStoreName();
     }
 }
