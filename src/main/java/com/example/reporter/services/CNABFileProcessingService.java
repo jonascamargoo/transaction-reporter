@@ -97,40 +97,4 @@ public class CNABFileProcessingService {
         }
     }
 
-
-
-    // public void uploadCNABFile(MultipartFile file) {
-    //     // file = "special%characters.txt" -> "specialcharacters.txt"
-    //     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-    //     // get final destination
-    //     Path targetLocation = fileStorageLocation.resolve(fileName);
-    //     try {
-    //         file.transferTo(targetLocation);
-    //     } catch (IllegalStateException stateException) {
-    //         throw new FileTransferStateException();
-    //     } catch (IOException ioExeException) {
-    //         throw new FileTransferIOException();
-    //     } finally {
-    //         // Since the CNAB will be processed only once, the parameter will be its name
-    //         // (jobParameters), which contains the full path of the resource
-    //         JobParameters jobParameters = new JobParametersBuilder()
-    //                 // The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
-    //                 // This guarantees that the job is processed only once
-    //                 .addJobParameter("cnab", file.getOriginalFilename(), String.class, true)
-    //                 .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class, false)
-    //                 .toJobParameters();
-    //         try {
-    //             // After being correctly parameterized, the job is executed
-    //             jobLauncher.run(job, jobParameters);
-    //         } catch (JobExecutionAlreadyRunningException alreadyRunningException) {
-    //             throw new JAlreadyRunningException();
-    //         } catch (JobRestartException restartException) {
-    //             throw new JRestartException();
-    //         } catch (JobInstanceAlreadyCompleteException alreadyCompleteException) {
-    //             throw new JInstanceAlreadyCompleteException();
-    //         } catch (JobParametersInvalidException invalidParametersException) {
-    //             throw new JParametersInvalidException(); 
-    //         }
-    //     }
-    // }
 }

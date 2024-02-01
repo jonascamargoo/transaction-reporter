@@ -23,6 +23,7 @@ import com.github.javafaker.Faker;
 
 @ExtendWith(MockitoExtension.class) // Junit5
 public class TransactionServiceTest {
+    // Test Pattern -> A - arrage; A - act; A - assert
 
     @InjectMocks // injetando o service e suas dependencias em cascata
     private TransactionService transactionService;
