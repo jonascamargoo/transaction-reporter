@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS transacao (
     id SERIAL PRIMARY KEY,
-    tipo INT,
-    data DATE,
-    valor DECIMAL,
+    type INT,
+    date DATE,
+    value DECIMAL,
     cpf BIGINT,
-    cartao VARCHAR(255),
-    hora TIME,
-    dono_loja VARCHAR(255),
-    nome_loja VARCHAR(255)
+    card VARCHAR(255),
+    hour TIME,
+    store_owner VARCHAR(255),
+    store_name VARCHAR(255)
 );
