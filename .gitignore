@@ -26,6 +26,5 @@ replay_pid*
 
 # personal ignores
 .vscode/
-application.properties
 doc.txt
 challenge.md
