@@ -16,20 +16,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.example.reporter.entities.Transaction;
-import com.example.reporter.repository.TransactionRepository;
-import com.example.reporter.services.TransactionService;
+import com.example.reporter.entities.Operation;
+import com.example.reporter.repository.OperationRepository;
+import com.example.reporter.services.OperationService;
 import com.github.javafaker.Faker;
 
 @ExtendWith(MockitoExtension.class) // Junit5
-public class TransactionServiceTest {
+public class OperationServiceTest {
     // Test Pattern -> A - arrage; A - act; A - assert
 
     @InjectMocks // injetando o service e suas dependencias em cascata
-    private TransactionService transactionService;
+    private OperationService operationService;
 
     @Mock
-    private TransactionRepository transactionRepository;
+    private OperationRepository operationRepository;
 
     Faker faker = new Faker();
 
@@ -37,7 +37,7 @@ public class TransactionServiceTest {
     public void testlistTotaisTransacoesByNomeDaLoja() {
         final String lojaA = "Loja A", lojaB = "Loja B";
 
-        var transaction1 = new Transaction(
+        var operation1 = new Operation(
                 UUID.randomUUID(),
                 1, new Date(System.currentTimeMillis()),
                 BigDecimal.valueOf(100.00),
@@ -47,7 +47,7 @@ public class TransactionServiceTest {
                 faker.name().fullName(),
                 lojaA);
 
-        var transaction2 = new Transaction(
+        var operation2 = new Operation(
                 UUID.randomUUID(),
                 2,
                 new Date(System.currentTimeMillis()),
@@ -58,7 +58,7 @@ public class TransactionServiceTest {
                 faker.name().fullName(),
                 lojaB);
 
-        var transaction3 = new Transaction(
+        var operation3 = new Operation(
                 UUID.randomUUID(),
                 1,
                 new Date(System.currentTimeMillis()),
@@ -69,32 +69,32 @@ public class TransactionServiceTest {
                 faker.name().fullName(),
                 lojaA);
 
-        // Since our transactionService is a mock, the findBy... method won't return
+        // Since our operationService is a mock, the findBy... method won't return
         // actual objects from the database
         // Therefore, we'll use stubbing to set expectations
 
-        var mockTransaction = List.of(transaction1, transaction2, transaction3);
+        var mockOperation = List.of(operation1, operation2, operation3);
 
-        when(transactionRepository.findAllByOrderByStoreNameAscIdDesc())
-                .thenReturn(mockTransaction);
+        when(operationRepository.findAllByOrderByStoreNameAscIdDesc())
+                .thenReturn(mockOperation);
 
         // The service logic is being used, but when it comes to its dependencies,
         // their behavior is mocked (I specify exactly what will happen).
 
-        var reports = transactionService.listTotalTransactionsByStoreName();
+        var reports = operationService.listTotalOperationsByStoreName();
 
         assertEquals(2, reports.size());
 
         reports.forEach(report -> {
             if (report.storeName().equals(lojaA)) {
-                assertEquals(2, report.transactions().size());
+                assertEquals(2, report.operations().size());
                 assertEquals(BigDecimal.valueOf(175.00), report.total());
-                assertTrue(report.transactions().contains(transaction1));
-                assertTrue(report.transactions().contains(transaction3));
+                assertTrue(report.operations().contains(operation1));
+                assertTrue(report.operations().contains(operation3));
             } else if (report.storeName().equals(lojaB)) {
-                assertEquals(1, report.transactions().size());
+                assertEquals(1, report.operations().size());
                 assertEquals(BigDecimal.valueOf(50.00), report.total());
-                assertTrue(report.transactions().contains(transaction2));
+                assertTrue(report.operations().contains(operation2));
             }
         });
 

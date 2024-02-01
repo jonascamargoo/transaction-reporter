@@ -2,7 +2,7 @@ package com.example.reporter.entities;
 
 import java.math.BigDecimal;
 
-public enum TransactionType {
+public enum OperationType {
     // Invoice type IDs defined by business rules
     DEBITO(1), BOLETO(2), FINANCIAMENTO(3),
     CREDITO(4), RECEBIMENTO_EMPRESTIMO(5), VENDAS(6), 
@@ -10,7 +10,7 @@ public enum TransactionType {
 
     private int type;
 
-    private TransactionType(int type) {
+    private OperationType(int type) {
         this.type = type;
     }
 
@@ -26,10 +26,10 @@ public enum TransactionType {
         };
     }
 
-    public static TransactionType findByType(int type) {
-        for (TransactionType transactionType : values()) {
-            if(transactionType.type == type) {
-                return transactionType;
+    public static OperationType findByType(int type) {
+        for (OperationType operationType : values()) {
+            if(operationType.type == type) {
+                return operationType;
             }
         }
         throw new IllegalArgumentException("Invalid tipo: " + type);

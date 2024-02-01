@@ -28,9 +28,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.example.reporter.entities.Operation;
 import com.example.reporter.entities.Remittance;
-import com.example.reporter.entities.Transaction;
-import com.example.reporter.entities.TransactionType;
+import com.example.reporter.entities.OperationType;
 
 @Configuration
 public class BatchConfig {
@@ -53,14 +53,14 @@ public class BatchConfig {
                 .build();
     }
 
-    // Breaking down the processing piece by piece and defining what we want - Batch works with large data and we gonna count transaction by transaction
+    // Breaking down the processing piece by piece and defining what we want - Batch works with large data and we gonna count operation by operation
     @Bean
     Step step(
             ItemReader<Remittance> itemReader,
-            ItemProcessor<Remittance, Transaction> itemProcessor,
-            ItemWriter<Transaction> itemWriter) {
+            ItemProcessor<Remittance, Operation> itemProcessor,
+            ItemWriter<Operation> itemWriter) {
         return new StepBuilder("step", jobRepository)
-                .<Remittance, Transaction>chunk(1000, platformTransactionManager)
+                .<Remittance, Operation>chunk(1000, platformTransactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
@@ -96,43 +96,43 @@ public class BatchConfig {
     // Logic to process the remittance file into a return file
 
     @Bean
-    ItemProcessor<Remittance, Transaction> processor() {
+    ItemProcessor<Remittance, Operation> processor() {
         // Converting .REM to .RET
         // Here we will configure the processor that will handle a
-        // Remittance into a Transaction. However, as we are dealing with
+        // Remittance into a Operation. However, as we are dealing with
         // records (which are immutable), we will use the Wither Pattern -> I create a
         // method that
-        // recreates the transaction, changing only the property I want to modify.
+        // recreates the operation, changing only the property I want to modify.
         // Therefore,
-        // we will create a Transaction with all values the same, changing only the
+        // we will create a Operation with all values the same, changing only the
         // value property.
         return item -> {
-            var transactionType = TransactionType.findByType(item.type());
+            var operationType = OperationType.findByType(item.type());
             // I divided by 100 due to the challenge specification. I will do the same for
             // date and time
             var withNormalizedValue = item.value()
                     .divide(new BigDecimal(100))
-                    .multiply(transactionType.getSinal());
+                    .multiply(operationType.getSinal());
             // Wither pattern
-            var transaction = new Transaction(
+            var operation = new Operation(
                     null, item.type(), null,
                     withNormalizedValue, item.cpf(), item.card(),
                     null, item.storeOwner().trim(), item.storeName().trim())
                     .withDate(item.date())
                     .withHour(item.hour());
-            return transaction;
+            return operation;
 
         };
     }
 
     @Bean
-    JdbcBatchItemWriter<Transaction> writer(DataSource dataSource) {
-        return new JdbcBatchItemWriterBuilder<Transaction>()
+    JdbcBatchItemWriter<Operation> writer(DataSource dataSource) {
+        return new JdbcBatchItemWriterBuilder<Operation>()
                 .dataSource(dataSource)
                 // In batch processing, we always aim for high performance, so I will use raw
                 // SQL
                 .sql("""
-                        INSERT INTO transaction (
+                        INSERT INTO operation (
                             type, date, value, cpf, card,
                             hour, store_owner, store_name
                         ) VALUES (
@@ -140,7 +140,7 @@ public class BatchConfig {
                         )
                         """)
                 // I added placeholders with the same name to use beanMapped for
-                // automatically filling in the value of the received transaction
+                // automatically filling in the value of the received operation
                 .beanMapped()
                 .build();
     }

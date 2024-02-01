@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS transacao (
+CREATE TABLE IF NOT EXISTS operation (
     id SERIAL PRIMARY KEY,
     type INT,
     date DATE,
