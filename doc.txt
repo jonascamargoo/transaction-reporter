@@ -1,1 +1,0 @@
-O programa eh um protótipo de software capaz de automatizar o CNAB. CNAB é um padrão utilizado por intituições financeiras para lidar com operações financeiras. O arquivo será temporariamente armazenado na pasta temp até ser expurgado no final da execução do Job.
