@@ -1,4 +1,4 @@
-package com.example.reporter.web;
+package com.example.reporter.controllers;
 
 import java.io.IOException;
 

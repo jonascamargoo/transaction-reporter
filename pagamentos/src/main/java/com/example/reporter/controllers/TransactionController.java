@@ -1,4 +1,4 @@
-package com.example.reporter.web;
+package com.example.reporter.controllers;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import com.example.reporter.services.TransactionService;
 
 @RestController
 @RequestMapping("transacoes")     // curl http://localhost:8080/transacoes | json_pp
-public class TransacaoController {
+public class TransactionController {
     private TransactionService transactionService;
 
-    public TransacaoController(TransactionService transactionService) {
+    public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
     

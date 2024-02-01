@@ -1,4 +1,4 @@
-package com.example.reporter.job;
+package com.example.reporter.config.job;
 
 import java.math.BigDecimal;
 
