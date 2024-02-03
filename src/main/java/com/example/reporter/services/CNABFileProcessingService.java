@@ -53,8 +53,9 @@ public class CNABFileProcessingService {
         Path targetLocation = transferCNABFile(file);
         JobParameters parameters = createJobParameters(file, targetLocation);
         executeJob(parameters);
+        
     }
-
+    
     public Path transferCNABFile(MultipartFile file) {
         // file = "special%characters.txt" -> "specialcharacters.txt"
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());

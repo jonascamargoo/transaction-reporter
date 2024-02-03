@@ -145,7 +145,6 @@ public class BatchConfig {
                 .build();
     }
 
-    // ENTENDER!
     @Bean
     JobLauncher jobLauncherAsync(JobRepository jobRepository) throws Exception  {
         var jobLauncher = new TaskExecutorJobLauncher();

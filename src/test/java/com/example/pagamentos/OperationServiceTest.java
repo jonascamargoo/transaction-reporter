@@ -34,7 +34,7 @@ public class OperationServiceTest {
     Faker faker = new Faker();
 
     @Test
-    public void testlistTotaisTransacoesByNomeDaLoja() {
+    public void testlistTotalOperationsByStoreName() {
         final String lojaA = "Loja A", lojaB = "Loja B";
 
         var operation1 = new Operation(
