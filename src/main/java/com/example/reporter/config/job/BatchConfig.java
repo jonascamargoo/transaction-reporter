@@ -76,9 +76,11 @@ public class BatchConfig {
     // the
     // parameters are available - for that, StepScope
     @Bean
+    //FlatFiles are not already formatted like xml or another format, so we need a builder to create one
     FlatFileItemReader<Remittance> reader(@Value("#{jobParameters['cnabFile']}") Resource resource) {
         return new FlatFileItemReaderBuilder<Remittance>()
                 .name("reader")
+                // I obtained the 'cnabFile' from jobParameters, called it 'resource', and injected it here in 'resource(resource)'
                 .resource(resource)
                 .fixedLength()
                 .columns(
@@ -93,7 +95,7 @@ public class BatchConfig {
                 .build();
     }
 
-    // Logic to process the remittance file into a return file
+    // Logic to process the remittance file into a return file (Operation)
 
     @Bean
     ItemProcessor<Remittance, Operation> processor() {
@@ -145,6 +147,7 @@ public class BatchConfig {
                 .build();
     }
 
+    // Customizing the jobLauncher to run asynchronously
     @Bean
     JobLauncher jobLauncherAsync(JobRepository jobRepository) throws Exception  {
         var jobLauncher = new TaskExecutorJobLauncher();

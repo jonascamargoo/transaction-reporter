@@ -49,14 +49,9 @@ public class CNABFileProcessingService {
         this.job = job;
     }
 
-    public void uploadCNABFile(MultipartFile file) {
-        Path targetLocation = transferCNABFile(file);
-        JobParameters parameters = createJobParameters(file, targetLocation);
-        executeJob(parameters);
-        
-    }
     
-    public Path transferCNABFile(MultipartFile file) {
+    // uploadCNABFile make the file upload and transfer to "tmp" folder, then return its Path
+    public Path uploadCNABFile(MultipartFile file) {
         // file = "special%characters.txt" -> "specialcharacters.txt"
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         // get final destination
@@ -71,22 +66,24 @@ public class CNABFileProcessingService {
         return targetLocation;
     }
 
-    public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {
-        // Since the CNAB will be processed only once, the parameter will be its name
-            // (jobParameters), which contains the full path of the resource
+    public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {   
             JobParameters jobParameters = new JobParametersBuilder()
-                // The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
+                // Since the CNAB will be processed only once, the parameter will be its name - "cnab". The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
                 // This guarantees that the job is processed only once
                 .addJobParameter("cnab", file.getOriginalFilename(), String.class, true)
-                .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class, false)
+                // ADICIONANDO OUTRO PARAMETRO??
+                .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class)
                 .toJobParameters();
             return jobParameters;
     }
 
-    public void executeJob(JobParameters jobParameters) {
+    
+    public void executeJob(MultipartFile file) {
         try {
+            Path targetLocation = uploadCNABFile(file);
             // After being correctly parameterized, the job is executed
-            jobLauncher.run(job, jobParameters);
+            JobParameters parameters = createJobParameters(file, targetLocation);
+            jobLauncher.run(job, parameters);
         } catch (JobExecutionAlreadyRunningException alreadyRunningException) {
             throw new JAlreadyRunningException();
         } catch (JobRestartException restartException) {

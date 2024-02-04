@@ -22,4 +22,6 @@ public class OperationController {
     List<OperationReport> listAll() {
         return operationService.listTotalOperationsByStoreName();
     }
+
+    
 }

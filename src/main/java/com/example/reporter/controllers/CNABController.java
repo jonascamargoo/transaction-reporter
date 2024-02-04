@@ -19,11 +19,11 @@ public class CNABController {
         this.cnabFileProcessingService = cnabFileProcessingService;
     }
 
-    // testei com curl -X POST -F "file=@CNAB.txt" http://localhost:8080/cnab/upload
+    // testei com curl -X POST -F "file=@CNAB.txt" http://localhost:8080/cnab/execute
     
-    @PostMapping("upload")
+    @PostMapping("execute")
     public String upload(@RequestParam("file") MultipartFile file) {
-        cnabFileProcessingService.uploadCNABFile(file);
+        cnabFileProcessingService.executeJob(file);
         return "Processamento iniciado em background!";
     }
 

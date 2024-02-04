@@ -22,8 +22,8 @@ public record Operation(
     @Column("store_name") String storeName
 ) {
 
-    // Applying the Wither Pattern. Used this.*() to indicate what is being changed or not, as exemplified in the commented method
-
+    // Applying the Wither Pattern
+    
     public Operation withValor(BigDecimal valor) {
         return new Operation(
             id, type, date,

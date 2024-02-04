@@ -1,7 +1,6 @@
 package com.example.reporter.exceptions;
 
 
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,11 +15,6 @@ import com.example.reporter.exceptions.customExceptions.JRestartException;
 
 @ControllerAdvice
 public class RestExceptionHandler {
-    @ExceptionHandler(JobInstanceAlreadyCompleteException.class)
-    private ResponseEntity<Object> handlerFileAlreadyImported(JobInstanceAlreadyCompleteException exception) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("O arquivo informado já foi importado no sistema. Por padrão, o CNAB não é duplicado!");
-    }
- 
     @ExceptionHandler(FileTransferStateException.class)
     private ResponseEntity<RestErrorMessage> fileTransferStateHandler(FileTransferStateException exception) {
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
@@ -34,13 +28,13 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(JAlreadyRunningException.class)
-    private ResponseEntity<RestErrorMessage> jobAlreadyRunningHandler(JAlreadyRunningException exception) {
+    private ResponseEntity<RestErrorMessage> jAlreadyRunningHandler(JAlreadyRunningException exception) {
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.CONFLICT, exception.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(threatResponse);
     }
 
     @ExceptionHandler(JRestartException.class)
-    private ResponseEntity<RestErrorMessage> jobRestartHandler(JRestartException exception) {
+    private ResponseEntity<RestErrorMessage> jRestartHandler(JRestartException exception) {
         RestErrorMessage threatResponse = new RestErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(threatResponse);
     }
