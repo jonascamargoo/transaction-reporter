@@ -79,7 +79,7 @@ public class CNABFileProcessingService {
     }
 
     
-    public void executeJob(MultipartFile file) {
+    public void upload(MultipartFile file) {
         try {
             Path targetLocation = uploadCNABFile(file);
             // After being correctly parameterized, the job is executed
