@@ -20,14 +20,14 @@ public class OperationService {
         this.operationRepository = operationRepository;
     }
     
-    public List<OperationReport> listTotalOperationsByStoreName() {
-        var operations = operationRepository.findAllByOrderByStoreNameAscIdDesc();
+    public List<OperationReport> listTotalsOperationsByStoreName() {
+        var operations = operationRepository.findAllByOrderByOpStoreNameAscOpIdDesc();
         // A LinkedHashMap, as we want to preserve the order, and a regular HashMap doesnt
         var reportMap = new LinkedHashMap<String, OperationReport>();
         
         operations.forEach(operation -> {
-            String storeName = operation.storeName();
-            BigDecimal value = operation.value();
+            String storeName = operation.opStoreName();
+            BigDecimal value = operation.opValue();
             // If the key exists, I keep it and add the balance. If not, it is initialized with a balance of 0
             reportMap.compute(storeName, (key, existingReport) -> {
                 var report = (existingReport != null) ? existingReport 

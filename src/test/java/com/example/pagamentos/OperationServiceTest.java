@@ -75,13 +75,13 @@ public class OperationServiceTest {
 
         var mockOperation = List.of(operation1, operation2, operation3);
 
-        when(operationRepository.findAllByOrderByStoreNameAscIdDesc())
+        when(operationRepository.findAllByOrderByOpStoreNameAscOpIdDesc())
                 .thenReturn(mockOperation);
 
         // The service logic is being used, but when it comes to its dependencies,
         // their behavior is mocked (I specify exactly what will happen).
 
-        var reports = operationService.listTotalOperationsByStoreName();
+        var reports = operationService.listTotalsOperationsByStoreName();
 
         assertEquals(2, reports.size());
 

@@ -20,7 +20,7 @@ public class OperationController {
     
     @GetMapping
     List<OperationReport> listAll() {
-        return operationService.listTotalOperationsByStoreName();
+        return operationService.listTotalsOperationsByStoreName();
     }
 
     

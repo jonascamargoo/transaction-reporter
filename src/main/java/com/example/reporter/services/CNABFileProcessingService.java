@@ -66,13 +66,14 @@ public class CNABFileProcessingService {
         return targetLocation;
     }
 
+    
     public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {   
             JobParameters jobParameters = new JobParametersBuilder()
                 // Since the CNAB will be processed only once, the parameter will be its name - "cnab". The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
                 // This guarantees that the job is processed only once
                 .addJobParameter("cnab", file.getOriginalFilename(), String.class, true)
-                // ADICIONANDO OUTRO PARAMETRO??
-                .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class)
+                // The second parameter is the file path, therefore, it will vary (unlike the name). Hence, it will not be chosen for uniqueness control - identifying: false
+                .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class, false)
                 .toJobParameters();
             return jobParameters;
     }

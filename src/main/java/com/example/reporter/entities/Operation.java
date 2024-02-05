@@ -11,43 +11,42 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 public record Operation(
-    @Id UUID id,
-    Integer type,
-    Date date,
-    BigDecimal value,
-    String cpf,
-    String card,
-    Time hour,
-    @Column("store_owner") String storeOwner,
-    @Column("store_name") String storeName
+    // @Column to distinguish column names from reserved names
+    @Id UUID opId,
+    @Column("op_type") Integer opType,
+    @Column("op_date") Date opDate,
+    @Column("op_value") BigDecimal opValue,
+    @Column("op_cpf") String opCpf,
+    @Column("op_card") String opCard,
+    @Column("op_hour") Time opHour,
+    @Column("op_store_owner") String opStoreOwner,
+    @Column("op_store_name") String opStoreName
 ) {
-
     // Applying the Wither Pattern
     
     public Operation withValor(BigDecimal valor) {
         return new Operation(
-            id, type, date,
-            value, cpf, card,
-            hour, storeName, storeName);
+            opId, opType, opDate,
+            opValue, opCpf, opCard,
+            opHour, opStoreOwner, opStoreName);
     }
 
     public Operation withDate(String date) throws ParseException {
         var dateFormat = new SimpleDateFormat("yyyyMMdd");
         var parsedDate = dateFormat.parse(date);
         return new Operation(
-            id, type, new Date(parsedDate.getTime()), 
-            value, cpf, card, 
-            hour, storeOwner, storeName);
+            opId, opType, new Date(parsedDate.getTime()), 
+            opValue, opCpf, opCard, 
+            opHour, opStoreOwner, opStoreName);
     }
 
     public Operation withHour(String hour) throws ParseException {
         var dateFormat = new SimpleDateFormat("HHmmss");
         var parsedHour = dateFormat.parse(hour);
-
         return new Operation(
-            id, type, date,
-            value, cpf, card,
-            new Time(parsedHour.getTime()), storeOwner, storeName);
+            opId, opType, opDate,
+            opValue, opCpf, opCard,
+            new Time(parsedHour.getTime()), opStoreOwner, opStoreName);
     }
 
 }

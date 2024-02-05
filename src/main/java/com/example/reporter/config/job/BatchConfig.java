@@ -96,7 +96,6 @@ public class BatchConfig {
     }
 
     // Logic to process the remittance file into a return file (Operation)
-
     @Bean
     ItemProcessor<Remittance, Operation> processor() {
         // Converting .REM to .RET
@@ -135,10 +134,10 @@ public class BatchConfig {
                 // SQL
                 .sql("""
                         INSERT INTO operation (
-                            type, date, value, cpf, card,
-                            hour, store_owner, store_name
+                            op_type, op_date, op_value, op_cpf, op_card,
+                            op_hour, op_store_owner, op_store_name
                         ) VALUES (
-                            :type, :date, :value, :cpf, :card, :hour, :storeOwner, :storeName
+                            :opType, :opDate, :opValue, :opCpf, :opCard, :opHour, :opStoreOwner, :opStoreName
                         )
                         """)
                 // I added placeholders with the same name to use beanMapped for

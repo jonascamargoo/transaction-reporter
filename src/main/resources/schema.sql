@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS operation (
-    id SERIAL PRIMARY KEY,
-    type INT,
-    date DATE,
-    value DECIMAL,
-    cpf BIGINT,
-    card VARCHAR(255),
-    hour TIME,
-    store_owner VARCHAR(255),
-    store_name VARCHAR(255)
+    op_id SERIAL PRIMARY KEY,
+    op_type INT,
+    op_date DATE,
+    op_value DECIMAL,
+    op_cpf VARCHAR(255),
+    op_card VARCHAR(255),
+    op_hour TIME,
+    op_store_owner VARCHAR(255),
+    op_store_name VARCHAR(255)
 );
