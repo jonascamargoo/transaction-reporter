@@ -1,15 +1,19 @@
 import axios from "axios";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function App() {
   const [transactions, setTransactions] = useState([]);
 
   const fetchTransactions = async () => {
-    const response = await axios.get("http://localhost:8080/transacoes");
+    const response = await axios.get("http://localhost:8080/operacoes");
     // the reponse body comes in 'response.data'
     setTransactions(response.data);
     console.log(response.data);
   }
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [])
 
   return (
     <div>

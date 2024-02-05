@@ -1,5 +1,6 @@
 package com.example.reporter.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ public class CNABController {
     // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/cnab/execute
     
     @PostMapping("execute")
+    @CrossOrigin(origins="http://localhost:9090")
     public String upload(@RequestParam("file") MultipartFile file) {
         cnabFileProcessingService.executeJob(file);
         return "Processamento iniciado em background!";
