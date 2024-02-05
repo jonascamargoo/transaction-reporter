@@ -38,7 +38,7 @@ public class OperationServiceTest {
         final String lojaA = "Loja A", lojaB = "Loja B";
 
         var operation1 = new Operation(
-                UUID.randomUUID(),
+                1L,
                 1, new Date(System.currentTimeMillis()),
                 BigDecimal.valueOf(100.00),
                 faker.numerify("#########"),
@@ -48,7 +48,7 @@ public class OperationServiceTest {
                 lojaA);
 
         var operation2 = new Operation(
-                UUID.randomUUID(),
+                2L,
                 2,
                 new Date(System.currentTimeMillis()),
                 BigDecimal.valueOf(50.00),
@@ -59,7 +59,7 @@ public class OperationServiceTest {
                 lojaB);
 
         var operation3 = new Operation(
-                UUID.randomUUID(),
+                3L,
                 1,
                 new Date(System.currentTimeMillis()),
                 BigDecimal.valueOf(75.00),

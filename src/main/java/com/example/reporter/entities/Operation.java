@@ -5,14 +5,13 @@ import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 public record Operation(
     // @Column to distinguish column names from reserved names
-    @Id UUID opId,
+    @Id Long opId,
     @Column("op_type") Integer opType,
     @Column("op_date") Date opDate,
     @Column("op_value") BigDecimal opValue,
