@@ -29,7 +29,7 @@ public class OperationServiceTest {
 
     @Mock
     private OperationRepository operationRepository;
-
+    
     Faker faker = new Faker();
 
     @Test
