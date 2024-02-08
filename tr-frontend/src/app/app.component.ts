@@ -5,6 +5,7 @@ import { OperationsListComponent } from './components/operations-list/operations
 import { NgOptimizedImage } from '@angular/common';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { CommonModule } from '@angular/common';
+import { AboutCNABComponent } from './components/about-cnab/about-cnab.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,8 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     OperationsListComponent,
     NgOptimizedImage,
-    FileUploadComponent
+    FileUploadComponent,
+    AboutCNABComponent
   ],
   templateUrl: './app.component.html',
 })
