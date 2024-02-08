@@ -1,14 +1,20 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { FileUploadService } from '../../services/file-upload.service';
+import { BtnSelectComponent } from '../btn-select/btn-select.component';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    BtnSelectComponent
+  ],
   templateUrl: './file-upload.component.html',
 })
+// export class FileUploadComponent {}
 export class FileUploadComponent implements OnInit{
   // armazena o arquivo atualmente selecionado pra upload
   currentFile?: File;

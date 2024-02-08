@@ -5,6 +5,3 @@ import { config } from './app/app.config.server';
 const bootstrap = () => bootstrapApplication(AppComponent, config);
 
 export default bootstrap;
-
-
-// responsavel pelo SSR no anguar 17

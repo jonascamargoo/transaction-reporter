@@ -4,12 +4,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { OperationsListComponent } from './components/operations-list/operations-list.component';
 import { NgOptimizedImage } from '@angular/common';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
+    CommonModule,
     HeaderComponent,
     OperationsListComponent,
     NgOptimizedImage,
