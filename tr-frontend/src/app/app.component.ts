@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { OperationsListComponent } from './components/operations-list/operations-list.component';
-import { UploadComponent } from './components/upload/upload.component';
 import { NgOptimizedImage } from '@angular/common';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +12,10 @@ import { NgOptimizedImage } from '@angular/common';
     RouterOutlet,
     HeaderComponent,
     OperationsListComponent,
-    UploadComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    FileUploadComponent
   ],
   templateUrl: './app.component.html',
-  // styleUrl: './app.component.css'
 })
 
 
