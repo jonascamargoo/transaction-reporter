@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
     NgOptimizedImage
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  // styleUrl: './header.component.css'
 })
 export class HeaderComponent {
 

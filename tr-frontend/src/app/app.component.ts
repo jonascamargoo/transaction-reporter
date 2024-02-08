@@ -16,7 +16,7 @@ import { NgOptimizedImage } from '@angular/common';
     NgOptimizedImage
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  // styleUrl: './app.component.css'
 })
 
 
