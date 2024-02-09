@@ -12,4 +12,4 @@ module.exports = {
   plugins: [],
 }
 
-// se adicionar cores customizadas, as cores padrão do tailwind serao removidas!
+// se adicionar cores customizadas, as cores padrão do tailwind serao removidas! Usar bg-[#******]
