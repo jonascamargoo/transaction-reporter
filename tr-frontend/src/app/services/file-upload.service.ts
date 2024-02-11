@@ -14,7 +14,7 @@ export class FileUploadService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}/cnab/upload`, formData, {
       responseType: 'json',
     });
 
@@ -22,9 +22,8 @@ export class FileUploadService {
   }
 
   getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/files`);
+    return this.http.get(`${this.baseUrl}/operations`);
   }
 
-
-
+  
 }

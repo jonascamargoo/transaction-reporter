@@ -20,7 +20,7 @@ public class OperationController {
     }
     
     @GetMapping
-    @CrossOrigin(origins="http://localhost:9090")
+    @CrossOrigin(origins="http://localhost:4200")
     List<OperationReport> listAll() {
         return operationService.listTotalsOperationsByStoreName();
     }

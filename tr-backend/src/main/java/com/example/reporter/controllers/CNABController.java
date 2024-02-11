@@ -23,7 +23,7 @@ public class CNABController {
     // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/cnab/upload
     
     @PostMapping("upload")
-    @CrossOrigin(origins="http://localhost:9090")
+    @CrossOrigin(origins="http://localhost:4200")
     public String upload(@RequestParam("file") MultipartFile file) {
         cnabFileProcessingService.upload(file);
         return "Processamento iniciado em background!";
