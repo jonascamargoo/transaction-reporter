@@ -6,18 +6,15 @@ import { NgOptimizedImage } from '@angular/common';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { CommonModule } from '@angular/common';
 import { AboutCNABComponent } from './components/about-cnab/about-cnab.component';
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
-    CommonModule,
-    HeaderComponent,
-    OperationsListComponent,
-    NgOptimizedImage,
-    FileUploadComponent,
-    AboutCNABComponent
+    // CommonModule,
+    HomeComponent
   ],
   templateUrl: './app.component.html',
 })
