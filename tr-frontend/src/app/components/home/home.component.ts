@@ -5,6 +5,7 @@ import { FileUploadComponent } from '../file-upload/file-upload.component';
 import { HeaderComponent } from '../header/header.component';
 import { OperationsListComponent } from '../operations-list/operations-list.component';
 import { FooterComponent } from '../footer/footer.component';
+import { BtnSelectComponent } from '../btn-select/btn-select.component';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import { FooterComponent } from '../footer/footer.component';
     OperationsListComponent,
     NgOptimizedImage,
     FileUploadComponent,
+    BtnSelectComponent,
     AboutCNABComponent,
     FooterComponent
   ],
