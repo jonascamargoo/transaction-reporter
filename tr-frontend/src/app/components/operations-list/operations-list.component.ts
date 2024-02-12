@@ -3,7 +3,7 @@ import { Operation } from '../../Operation';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { OperationsListService } from '../../services/operations-list.service';
+import { FileUploadService } from '../../services/file-upload.service';
 
 @Component({
   selector: 'app-operations-list',
@@ -20,15 +20,14 @@ export class OperationsListComponent implements OnInit {
   http = inject(HttpClient);
   operations: any = [];
 
-  constructor(private operationListService: OperationsListService) {}
+  constructor(private uploadService: FileUploadService) {}
 
   ngOnInit(): void {
     this.loadOperations();
   }
 
-
   loadOperations() {
-    this.operationListService.listOperations().subscribe((operations: any) => {
+    this.uploadService.listOperations().subscribe((operations: any) => {
       console.log(operations);
       this.operations = operations;
     })

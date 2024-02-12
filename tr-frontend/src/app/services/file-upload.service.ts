@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Operation } from '../Operation';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class FileUploadService {
     return this.http.request(req);
   }
 
-  getFiles(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/operations`);
+  listOperations(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/operacoes`);
   }
 
   

@@ -2,7 +2,10 @@
 
 <section class="flex min-h-screen items-center justify-center">
     <ul class="overflow-x-auto relative shadow-md sm:rounded-lg py-3">
-        <li class="overflow-x-auto relative shadow-md sm:rounded-lg mb-8">
+        @for (report of operations; track report.opId) {}
+        <li class="overflow-x-auto relative shadow-md sm:rounded-lg mb-8"
+            *ngFor="let report of operations"
+        >
             <table class="w-full text-sm text-left text-white">
                 <thead class="text-xs text-white uppercase bg-gray-700 text-center">
                     <tr>
@@ -17,22 +20,18 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    @for (operation of operations; track operation.opId) {
-                        <tr class="bg-[#111827] border-gray-700">
-                            <td class="py-4 px-6">{{operation.opCard}}</td>
-                            <td class="py-4 px-6">{{operation.opCnpj}}</td>
-                            <td class="py-4 px-6">{{operation.opDate}}</td>
-                            <td class="py-4 px-6">{{operation.opStoreOwner}}</td>
-                            <td class="py-4 px-6">{{operation.opHour}}</td>
-                            <td class="py-4 px-6">{{operation.opStoreName}}</td>
-                            <td class="py-4 px-6">{{operation.opType}}</td>
-                            <td class="py-4 px-6">{{operation.opValue}}</td>
-                        </tr>
-
-                    }
-                    @empty {
-                        <h3>Sem operações</h3>
-                    }
+                    <tr class="bg-[#111827] border-gray-700"
+                    *ngFor="let operation of report.operations"
+                    >
+                        <td class="py-4 px-6">{{operation.opCard}}</td>
+                        <td class="py-4 px-6">{{operation.opCnpj}}</td>
+                        <td class="py-4 px-6">{{operation.opDate}}</td>
+                        <td class="py-4 px-6">{{operation.opStoreOwner}}</td>
+                        <td class="py-4 px-6">{{operation.opHour}}</td>
+                        <td class="py-4 px-6">{{operation.opStoreName}}</td>
+                        <td class="py-4 px-6">{{operation.opType}}</td>
+                        <td class="py-4 px-6">{{operation.opValue}}</td>
+                    </tr>
                 </tbody>
             </table>
             <!-- <p class="py-2 px-4 bg-gray-700 text-white text-start">Loja do Joao - valor total das transações: R$425,50</p> -->
