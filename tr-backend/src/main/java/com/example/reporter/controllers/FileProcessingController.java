@@ -1,5 +1,7 @@
 package com.example.reporter.controllers;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +13,7 @@ import com.example.reporter.services.FileProcessingService;
 
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/upload")
 public class FileProcessingController {
 
     private final FileProcessingService fileProcessingService;
@@ -20,12 +22,19 @@ public class FileProcessingController {
         this.fileProcessingService = fileProcessingService;
     }
 
-    // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload
-    @PostMapping("upload")
+    // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload-file
+    @PostMapping("file")
     @CrossOrigin(origins="http://localhost:4002")
-    public String upload(@RequestParam("file") MultipartFile file) {
-        fileProcessingService.upload(file);
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
+        fileProcessingService.uploadFile(file);
         return "Processamento iniciado em background!";
+    }
+
+    @PostMapping("files")
+    @CrossOrigin(origins="http://localhost:4002")
+    public String uploadFiles(@RequestParam("files") List<MultipartFile> files) {
+        fileProcessingService.uploadFiles(files);
+        return "Processamento iniciado em background para " + files.size() + " arquivo(s)!";
     }
 
 }

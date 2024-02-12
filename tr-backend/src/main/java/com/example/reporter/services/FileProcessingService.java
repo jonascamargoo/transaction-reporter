@@ -3,6 +3,8 @@ package com.example.reporter.services;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
@@ -49,8 +51,6 @@ public class FileProcessingService {
         this.job = job;
     }
 
-    
-    // uploadCNABFile make the file upload and transfer to "tmp" folder, then return its Path
     public Path uploadCNABFile(MultipartFile file) {
         // file = "special%characters.txt" -> "specialcharacters.txt"
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -67,6 +67,26 @@ public class FileProcessingService {
     }
 
     
+    // uploadCNABFile make the file upload and transfer to "tmp" folder, then return its Path
+    public List<Path> uploadCNABFiles(List<MultipartFile> files) {      
+        List<Path> targetLocations = new ArrayList<>();
+        for (MultipartFile file : files) {
+            // file = "special%characters.txt" -> "specialcharacters.txt"
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            // get final destination
+            Path targetLocation = fileStorageLocation.resolve(fileName);
+            try {
+                file.transferTo(targetLocation);
+                targetLocations.add(targetLocation);
+            } catch (IllegalStateException stateException) {
+                throw new FileTransferStateException();
+            } catch (IOException ioExeException) {
+                throw new FileTransferIOException();
+            }
+        }
+        return targetLocations;
+    }
+  
     public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {   
             JobParameters jobParameters = new JobParametersBuilder()
                 // Since the CNAB will be processed only once, the parameter will be its name - "cnab". The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
@@ -78,8 +98,7 @@ public class FileProcessingService {
             return jobParameters;
     }
 
-    
-    public void upload(MultipartFile file) {
+    public void uploadFile(MultipartFile file) {
         try {
             Path targetLocation = uploadCNABFile(file);
             // After being correctly parameterized, the job is executed
@@ -95,5 +114,26 @@ public class FileProcessingService {
             throw new JParametersInvalidException(); 
         }
     }
+
+    
+    public void uploadFiles(List<MultipartFile> files) {
+        try {
+            List<Path> targetLocations = uploadCNABFiles(files);
+            for (int i = 0; i < files.size() - 1; i++) {
+                // After being correctly parameterized, the job is executed
+                JobParameters parameters = createJobParameters(files.get(i), targetLocations.get(i));
+                jobLauncher.run(job, parameters);
+            }
+        } catch (JobExecutionAlreadyRunningException alreadyRunningException) {
+            throw new JAlreadyRunningException();
+        } catch (JobRestartException restartException) {
+            throw new JRestartException();
+        } catch (JobInstanceAlreadyCompleteException alreadyCompleteException) {
+            throw new JInstanceAlreadyCompleteException();
+        } catch (JobParametersInvalidException invalidParametersException) {
+            throw new JParametersInvalidException(); 
+        }
+    }
+
 
 }
