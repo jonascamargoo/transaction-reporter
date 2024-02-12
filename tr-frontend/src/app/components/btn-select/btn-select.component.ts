@@ -3,6 +3,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { UploadService } from '../../services/upload.service';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
+import { OperationService } from '../../services/operation.service';
 
 @Component({
   selector: 'app-btn-select',
@@ -22,10 +23,10 @@ export class BtnSelectComponent implements OnInit {
   // observable que armazena as informações dos arquivos disponiveis no servidor
   fileInfos?: Observable<any>;
 
-  constructor(private uploadService: UploadService) {}
+  constructor(private uploadService: UploadService, private operationService: OperationService) {}
 
   ngOnInit(): void {
-    this.fileInfos = this.uploadService.listOperations();
+    this.fileInfos = this.operationService.listOperations();
   }
 
     // para executar tanto a selecao quanto o upload ao submeter o arquivo, ja que estou utilizando apenas um botão. Caso adicionar mais um botao (dropbox ou google cloud), remover esse metodo e utilizar apenas, juntamente com o
@@ -51,7 +52,7 @@ export class BtnSelectComponent implements OnInit {
         next: (event: any) => {
           if(event instanceof HttpResponse) {
             this.message = event.body.message;
-            this.fileInfos = this.uploadService.listOperations();
+            this.fileInfos = this.operationService.listOperations();
           }
         },
         error: (err: any) => {

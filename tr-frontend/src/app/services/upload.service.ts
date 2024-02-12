@@ -15,25 +15,12 @@ export class UploadService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload/file`, formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}/file`, formData, {
       // response -> Processamento iniciado em background!
       responseType: 'text',
     });
 
     return this.http.request(req);
   }
-
-
-  // Create another service for operations
-
-  listOperations(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/operacoes`);
-  }
-
-  removeOperations(): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/operacoes`)
-  }
-
-
-  
+ 
 }

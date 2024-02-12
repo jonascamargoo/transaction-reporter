@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { UploadService } from '../../services/upload.service';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
+import { OperationService } from '../../services/operation.service';
 
 @Component({
   selector: 'app-operations-list',
@@ -20,7 +20,7 @@ export class OperationsListComponent implements OnInit {
   http = inject(HttpClient);
   operations: any = [];
 
-  constructor(private uploadService: UploadService) {}
+  constructor(private operationService: OperationService) {}
 
   ngOnInit(): void {
     
@@ -28,14 +28,14 @@ export class OperationsListComponent implements OnInit {
   }
 
   loadOperations() {
-    this.uploadService.listOperations().subscribe((operations: any) => {
+    this.operationService.listOperations().subscribe((operations: any) => {
       console.log(operations);
       this.operations = operations;
     })
   }
 
   removeOperations() {
-    this.uploadService.removeOperations();
+    this.operationService.removeOperations();
   }
 
 }
