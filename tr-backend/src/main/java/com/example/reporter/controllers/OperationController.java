@@ -11,7 +11,7 @@ import com.example.reporter.entities.OperationReport;
 import com.example.reporter.services.OperationService;
 
 @RestController
-@RequestMapping("operacoes")     // curl http://localhost:8080/operacoes | json_pp
+@RequestMapping("api")     
 public class OperationController {
     private OperationService operationService;
 
@@ -19,7 +19,8 @@ public class OperationController {
         this.operationService = operationService;
     }
     
-    @GetMapping
+    // curl http://localhost:8080/operacoes | json_pp
+    @GetMapping("/operacoes")
     @CrossOrigin(origins="http://localhost:4200")
     List<OperationReport> listAll() {
         return operationService.listTotalsOperationsByStoreName();

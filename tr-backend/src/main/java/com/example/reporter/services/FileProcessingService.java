@@ -26,7 +26,7 @@ import com.example.reporter.exceptions.customExceptions.JParametersInvalidExcept
 import com.example.reporter.exceptions.customExceptions.JRestartException;
 
 @Service
-public class CNABFileProcessingService {
+public class FileProcessingService {
     private final Path fileStorageLocation;
 
     // Since the job is annotated as a Bean in the configuration, Spring
@@ -40,7 +40,7 @@ public class CNABFileProcessingService {
     // sync
     private final Job job;
 
-    public CNABFileProcessingService(
+    public FileProcessingService(
             @Value("${file.upload-dir}") String fileUploadDir,
             @Qualifier("jobLauncherAsync") JobLauncher jobLauncher,
             Job job) {
