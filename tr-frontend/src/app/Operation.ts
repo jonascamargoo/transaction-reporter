@@ -1,10 +1,13 @@
-export interface Operation {
+// Tipo para o JSON fornecido
+export interface Operation = {
     opCard: string;
     opCpf: string;
-    opDate: Date;
-    opStoreOwner: string;
+    opDate: string;
     opHour: string;
+    opId: number;
     opStoreName: string;
+    opStoreOwner: string;
     opType: number;
     opValue: number;
-}
+};
+  

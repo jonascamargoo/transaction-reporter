@@ -7,12 +7,17 @@ import { Operation } from '../Operation';
 })
 export class OperationsListService {
 
-  constructor(private http: HttpClient) { }
+  
+
+  constructor(private http: HttpClient) {
+
+   }
 
   private baseUrl = 'http://localhost:8080/api';
 
-  listOperations() {
-    return this.http.get<Operation>(this.baseUrl);
-  }
+  // listOperations() {
+  //   return this.http.get<Operation>(this.baseUrl);
+    
+  // }
   
 }

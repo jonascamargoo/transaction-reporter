@@ -10,7 +10,7 @@ import { BtnSelectComponent } from '../btn-select/btn-select.component';
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule,
+    // CommonModule,
     HeaderComponent,
     OperationsListComponent,
     NgOptimizedImage,
