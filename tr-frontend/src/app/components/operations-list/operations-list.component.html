@@ -21,20 +21,21 @@
                         <tr class="bg-[#111827] border-gray-700">
                             <td class="py-4 px-6">{{operation.opCard}}</td>
                             <td class="py-4 px-6">{{operation.opCnpj}}</td>
-                            <td class="py-4 px-6">04/03/2017</td>
-                            <td class="py-4 px-6">Joao Dono</td>
-                            <td class="py-4 px-6">13:35:05</td>
-                            <td class="py-4 px-6">Loja do Joao</td>
-                            <td class="py-4 px-6">Tipo 1</td>
-                            <td class="py-4 px-6">R$150,00</td>
+                            <td class="py-4 px-6">{{operation.opDate}}</td>
+                            <td class="py-4 px-6">{{operation.opStoreOwner}}</td>
+                            <td class="py-4 px-6">{{operation.opHour}}</td>
+                            <td class="py-4 px-6">{{operation.opStoreName}}</td>
+                            <td class="py-4 px-6">{{operation.opType}}</td>
+                            <td class="py-4 px-6">{{operation.opValue}}</td>
                         </tr>
+
                     }
                     @empty {
                         <h3>Sem operações</h3>
                     }
                 </tbody>
             </table>
-            <p class="py-2 px-4 bg-gray-700 text-white text-start">Loja do Joao - valor total das transações: R$425,50</p>
+            <!-- <p class="py-2 px-4 bg-gray-700 text-white text-start">Loja do Joao - valor total das transações: R$425,50</p> -->
         </li>
     </ul>
 </section>

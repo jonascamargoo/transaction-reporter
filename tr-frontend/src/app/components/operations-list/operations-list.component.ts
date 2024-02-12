@@ -3,6 +3,7 @@ import { Operation } from '../../Operation';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { OperationsListService } from '../../services/operations-list.service';
 
 @Component({
   selector: 'app-operations-list',
@@ -19,17 +20,18 @@ export class OperationsListComponent implements OnInit {
   http = inject(HttpClient);
   operations: any = [];
 
+  constructor(private operationListService: OperationsListService) {}
+
   ngOnInit(): void {
-    this.fetchOperations();
+    this.loadOperations();
   }
 
-  fetchOperations() {
-    this.http.get("http://localhost:8080/api/operacoes")
-    .subscribe((operations: any) => {
+
+  loadOperations() {
+    this.operationListService.listOperations().subscribe((operations: any) => {
       console.log(operations);
-    });
+      this.operations = operations;
+    })
   }
-
-  // reactiveForms: formControl (um input) formGroup (varios inputs - usar em features futuras)
 
 }
