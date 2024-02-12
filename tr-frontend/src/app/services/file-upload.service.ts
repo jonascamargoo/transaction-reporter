@@ -15,7 +15,8 @@ export class FileUploadService {
     formData.append('file', file);
 
     const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
-      responseType: 'json',
+      // response -> Processamento iniciado em background!
+      responseType: 'text',
     });
 
     return this.http.request(req);
