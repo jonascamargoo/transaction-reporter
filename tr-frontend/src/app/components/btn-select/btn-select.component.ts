@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FileUploadService } from '../../services/file-upload.service';
+import { UploadService } from '../../services/upload.service';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 
@@ -22,7 +22,7 @@ export class BtnSelectComponent implements OnInit {
   // observable que armazena as informações dos arquivos disponiveis no servidor
   fileInfos?: Observable<any>;
 
-  constructor(private uploadService: FileUploadService) {}
+  constructor(private uploadService: UploadService) {}
 
   ngOnInit(): void {
     this.fileInfos = this.uploadService.listOperations();

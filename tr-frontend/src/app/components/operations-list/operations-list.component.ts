@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { FileUploadService } from '../../services/file-upload.service';
+import { UploadService } from '../../services/upload.service';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 
@@ -20,7 +20,7 @@ export class OperationsListComponent implements OnInit {
   http = inject(HttpClient);
   operations: any = [];
 
-  constructor(private uploadService: FileUploadService) {}
+  constructor(private uploadService: UploadService) {}
 
   ngOnInit(): void {
     
