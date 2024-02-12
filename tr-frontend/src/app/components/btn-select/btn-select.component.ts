@@ -28,12 +28,16 @@ export class BtnSelectComponent implements OnInit {
     this.fileInfos = this.uploadService.getFiles();
   }
 
+    // para executar tanto a selecao quanto o upload ao submeter o arquivo
+    onFileChange(event: any): void {
+      this.selectFile(event);
+      this.upload();
+    }
+
   // chamado quando um arquivo eh selecionado pelo usuario
   selectFile(event: any): void {
     this.currentFile = event.target.files[0];
   }
-
-
 
   // chamado quando o usuario clica no botao de upload
   // Usamos currentFile para acessar o arquivo atual como o primeiro item. Em seguida, chamamos o método uploadService.upload() no currentFile
