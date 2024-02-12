@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Operation } from './Operation';
+import { Operation } from '../../Operation';
 
 @Component({
   selector: 'app-operations-list',
