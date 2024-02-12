@@ -27,6 +27,7 @@ public class OperationController {
         return operationService.listTotalsOperationsByStoreName();
     }
 
+    // curl -X DELETE http://localhost:8080/api/operacoes
     @DeleteMapping("/operacoes")
     @CrossOrigin(origins = "http://localhost:4002")
     void removeAll() {

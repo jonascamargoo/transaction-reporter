@@ -1,6 +1,4 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Operation } from '../../Operation';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FileUploadService } from '../../services/file-upload.service';
@@ -25,7 +23,8 @@ export class OperationsListComponent implements OnInit {
   constructor(private uploadService: FileUploadService) {}
 
   ngOnInit(): void {
-    this.loadOperations();
+    
+    // preciso chamar o loadOperations em outro lugar
   }
 
   loadOperations() {
@@ -33,6 +32,10 @@ export class OperationsListComponent implements OnInit {
       console.log(operations);
       this.operations = operations;
     })
+  }
+
+  removeOperations() {
+    this.uploadService.removeOperations();
   }
 
 }
