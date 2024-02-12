@@ -14,7 +14,7 @@ export class FileUploadService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const req = new HttpRequest('POST', `${this.baseUrl}/cnab/upload`, formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}/api/upload`, formData, {
       responseType: 'json',
     });
 

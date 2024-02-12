@@ -22,7 +22,7 @@ public class FileProcessingController {
 
     // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload
     @PostMapping("upload")
-    @CrossOrigin(origins="http://localhost:4200")
+    @CrossOrigin(origins="http://localhost:4002")
     public String upload(@RequestParam("file") MultipartFile file) {
         fileProcessingService.upload(file);
         return "Processamento iniciado em background!";

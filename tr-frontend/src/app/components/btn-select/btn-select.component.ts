@@ -28,7 +28,10 @@ export class BtnSelectComponent implements OnInit {
     this.fileInfos = this.uploadService.getFiles();
   }
 
-    // para executar tanto a selecao quanto o upload ao submeter o arquivo
+    // para executar tanto a selecao quanto o upload ao submeter o arquivo, ja que estou utilizando apenas um botão. Caso adicionar mais um botao (dropbox ou google cloud), remover esse metodo e utilizar apenas, juntamente com o
+        // <input type='file' class="hidden" (change)="selectFile($event)"/>
+        // <button (click)="upload()"></button>
+      
     onFileChange(event: any): void {
       this.selectFile(event);
       this.upload();
