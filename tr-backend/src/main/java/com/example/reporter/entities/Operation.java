@@ -15,7 +15,7 @@ public record Operation(
     @Column("op_type") Integer opType,
     @Column("op_date") Date opDate,
     @Column("op_value") BigDecimal opValue,
-    @Column("op_cpf") String opCpf,
+    @Column("op_cnpj") String opCnpj,
     @Column("op_card") String opCard,
     @Column("op_hour") Time opHour,
     @Column("op_store_owner") String opStoreOwner,
@@ -26,7 +26,7 @@ public record Operation(
     public Operation withValor(BigDecimal valor) {
         return new Operation(
             opId, opType, opDate,
-            opValue, opCpf, opCard,
+            opValue, opCnpj, opCard,
             opHour, opStoreOwner, opStoreName);
     }
 
@@ -35,7 +35,7 @@ public record Operation(
         var parsedDate = dateFormat.parse(date);
         return new Operation(
             opId, opType, new Date(parsedDate.getTime()), 
-            opValue, opCpf, opCard, 
+            opValue, opCnpj, opCard, 
             opHour, opStoreOwner, opStoreName);
     }
 
@@ -44,7 +44,7 @@ public record Operation(
         var parsedHour = dateFormat.parse(hour);
         return new Operation(
             opId, opType, opDate,
-            opValue, opCpf, opCard,
+            opValue, opCnpj, opCard,
             new Time(parsedHour.getTime()), opStoreOwner, opStoreName);
     }
 

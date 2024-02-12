@@ -89,7 +89,7 @@ public class BatchConfig {
                         new Range(31, 42), new Range(43, 48),
                         new Range(49, 62), new Range(63, 80))
                 .names(
-                        "type", "date", "value", "cpf",
+                        "type", "date", "value", "cnpj",
                         "card", "hour", "storeOwner", "storeName")
                 .targetType(Remittance.class)
                 .build();
@@ -117,7 +117,7 @@ public class BatchConfig {
             // Wither pattern
             var operation = new Operation(
                     null, item.type(), null,
-                    withNormalizedValue, item.cpf(), item.card(),
+                    withNormalizedValue, item.cnpj(), item.card(),
                     null, item.storeOwner().trim(), item.storeName().trim())
                     .withDate(item.date())
                     .withHour(item.hour());
@@ -134,10 +134,10 @@ public class BatchConfig {
                 // SQL
                 .sql("""
                         INSERT INTO operation (
-                            op_type, op_date, op_value, op_cpf, op_card,
+                            op_type, op_date, op_value, op_cnpj, op_card,
                             op_hour, op_store_owner, op_store_name
                         ) VALUES (
-                            :opType, :opDate, :opValue, :opCpf, :opCard, :opHour, :opStoreOwner, :opStoreName
+                            :opType, :opDate, :opValue, :opCnpj, :opCard, :opHour, :opStoreOwner, :opStoreName
                         )
                         """)
                 // I added placeholders with the same name to use beanMapped for

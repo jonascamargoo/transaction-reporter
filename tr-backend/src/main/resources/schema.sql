@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS operation (
     op_type INT,
     op_date DATE,
     op_value DECIMAL,
-    op_cpf VARCHAR(255),
+    op_cnpj VARCHAR(255),
     op_card VARCHAR(255),
     op_hour TIME,
     op_store_owner VARCHAR(255),

@@ -6,7 +6,7 @@ public record Remittance(
     Integer type,
     String date,
     BigDecimal value,
-    String cpf,
+    String cnpj,
     String card,
     String hour,
     String storeOwner,
