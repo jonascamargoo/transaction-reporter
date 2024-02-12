@@ -8,7 +8,7 @@ public record OperationReport(
         BigDecimal total,
         List<Operation> operations) {
         
-        // Wither Pattern
+        // Design Pattern: Wither 
         
         public OperationReport addTotal(BigDecimal value) {
             return new OperationReport(storeName, total.add(value), operations);

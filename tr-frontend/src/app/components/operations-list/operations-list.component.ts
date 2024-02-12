@@ -16,15 +16,13 @@ import { OperationService } from '../../services/operation.service';
   templateUrl: './operations-list.component.html',
 })
 export class OperationsListComponent implements OnInit {
-
-  http = inject(HttpClient);
   operations: any = [];
 
   constructor(private operationService: OperationService) {}
 
   ngOnInit(): void {
+    this.loadOperations();
     
-    // preciso chamar o loadOperations em outro lugar
   }
 
   loadOperations() {

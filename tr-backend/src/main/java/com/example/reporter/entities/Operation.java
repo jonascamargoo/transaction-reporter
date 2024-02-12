@@ -21,7 +21,8 @@ public record Operation(
     @Column("op_store_owner") String opStoreOwner,
     @Column("op_store_name") String opStoreName
 ) {
-    // Applying the Wither Pattern
+    
+    // Design Pattern: Wither
     
     public Operation withValor(BigDecimal valor) {
         return new Operation(

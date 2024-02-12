@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UploadService } from '../../services/upload.service';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';

@@ -14,7 +14,7 @@ public enum OperationType {
         this.type = type;
     }
 
-    // Design pattern strategy
+    // Design pattern: strategy
 
     public BigDecimal getSinal() {
         return switch (type) {
