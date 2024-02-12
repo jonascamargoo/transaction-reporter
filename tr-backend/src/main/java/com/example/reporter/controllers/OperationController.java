@@ -3,6 +3,7 @@ package com.example.reporter.controllers;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +22,15 @@ public class OperationController {
     
     // curl http://localhost:8080/api/operacoes | json_pp
     @GetMapping("/operacoes")
-    @CrossOrigin(origins="http://localhost:4002")
+    @CrossOrigin(origins= "http://localhost:4002")
     List<OperationReport> listAll() {
         return operationService.listTotalsOperationsByStoreName();
+    }
+
+    @DeleteMapping("/operacoes")
+    @CrossOrigin(origins = "http://localhost:4002")
+    void removeAll() {
+        operationService.deleteOperations();
     }
 
     

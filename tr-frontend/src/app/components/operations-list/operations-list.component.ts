@@ -4,14 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FileUploadService } from '../../services/file-upload.service';
+import { HeaderComponent } from '../header/header.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-operations-list',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    FormsModule,
-    CommonModule
+    CommonModule,
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './operations-list.component.html',
 })

@@ -1,6 +1,6 @@
 <!-- class="via-gray-100 to-gray-200 bg-gradient-to-br" -->
-
-<section class="flex min-h-screen items-center justify-center">
+<app-header></app-header>
+<section class="flex min-h-screen items-center justify-center pt-14">
     <ul class="overflow-x-auto relative shadow-md sm:rounded-lg py-3">
         @for (report of operations; track report.opId) {}
         <li class="overflow-x-auto relative shadow-md sm:rounded-lg mb-8"
@@ -32,8 +32,8 @@
                         </tr>
                     </tbody>
                 </table>
-            <!-- <p class="py-2 px-4 bg-gray-700 text-white text-start">Loja do Joao - valor total das transações: R$425,50</p> -->
+            <p class="py-2 px-4 bg-gray-700 text-white text-start">Loja do Joao - valor total das transações: R$425,50</p>
         </li>
     </ul>
 </section>
-
+<app-footer></app-footer>

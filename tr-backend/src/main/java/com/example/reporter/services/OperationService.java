@@ -38,7 +38,11 @@ public class OperationService {
         });
         return new ArrayList<>(reportMap.values());
 
-    }        
+    }
+
+    public void deleteOperations() {
+        operationRepository.deleteAll();
+    }
         
 
 }
