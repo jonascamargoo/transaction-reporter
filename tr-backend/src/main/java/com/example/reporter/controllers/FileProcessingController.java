@@ -22,7 +22,7 @@ public class FileProcessingController {
         this.fileProcessingService = fileProcessingService;
     }
 
-    // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload-file
+    // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload/file
     @PostMapping("file")
     @CrossOrigin(origins="http://localhost:4002")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
@@ -30,6 +30,7 @@ public class FileProcessingController {
         return "Processamento iniciado em background!";
     }
 
+    // curl -X POST -F "files=@file1.txt" -F "files=@file2.txt" http://localhost:8080/api/upload/files
     @PostMapping("files")
     @CrossOrigin(origins="http://localhost:4002")
     public String uploadFiles(@RequestParam("files") List<MultipartFile> files) {
@@ -38,3 +39,4 @@ public class FileProcessingController {
     }
 
 }
+
