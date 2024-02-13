@@ -3,7 +3,6 @@ package com.example.reporter.controllers;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,12 +26,6 @@ public class OperationController {
         return operationService.listTotalsOperationsByStoreName();
     }
 
-    // curl -X DELETE http://localhost:8080/api/operacoes
-    @DeleteMapping("/operacoes")
-    @CrossOrigin(origins = "http://localhost:4002")
-    void removeAll() {
-        operationService.deleteOperations();
-    }
 
     
 }
