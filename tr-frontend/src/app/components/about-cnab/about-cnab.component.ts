@@ -12,7 +12,6 @@ import { FooterComponent } from '../footer/footer.component';
     FooterComponent
   ],
   templateUrl: './about-cnab.component.html',
-  styleUrl: './about-cnab.component.css'
 })
 export class AboutCNABComponent {
 
