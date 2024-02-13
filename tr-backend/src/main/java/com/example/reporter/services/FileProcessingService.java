@@ -51,7 +51,23 @@ public class FileProcessingService {
         this.job = job;
     }
 
+    // Metodos uploadCNABFile e uploadCNABFiles, para lidar com um ou mais arquivos,
+    // respecivamente. Ao passo que mantem a logica especifica do uploadFileInternal
+    // encapsulada
+
     public Path uploadCNABFile(MultipartFile file) {
+        return uploadFileInternal(file);
+    }
+
+    public List<Path> uploadCNABFiles(List<MultipartFile> files) {
+        List<Path> targetLocations = new ArrayList<>();
+        for (MultipartFile file : files) {
+            targetLocations.add(uploadFileInternal(file));
+        }
+        return targetLocations;
+    }
+
+    private Path uploadFileInternal(MultipartFile file) {
         // file = "special%characters.txt" -> "specialcharacters.txt"
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         // get final destination
@@ -66,42 +82,43 @@ public class FileProcessingService {
         return targetLocation;
     }
 
-    
-    // uploadCNABFile make the file upload and transfer to "tmp" folder, then return its Path
-    public List<Path> uploadCNABFiles(List<MultipartFile> files) {      
-        List<Path> targetLocations = new ArrayList<>();
-        for (MultipartFile file : files) {
-            // file = "special%characters.txt" -> "specialcharacters.txt"
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            // get final destination
-            Path targetLocation = fileStorageLocation.resolve(fileName);
-            try {
-                file.transferTo(targetLocation);
-                targetLocations.add(targetLocation);
-            } catch (IllegalStateException stateException) {
-                throw new FileTransferStateException();
-            } catch (IOException ioExeException) {
-                throw new FileTransferIOException();
-            }
-        }
-        return targetLocations;
-    }
-  
-    public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {   
-            JobParameters jobParameters = new JobParametersBuilder()
-                // Since the CNAB will be processed only once, the parameter will be its name - "cnab". The 'true' signals that "CNAB" is an identifier, ensuring uniqueness control.
-                // This guarantees that the job is processed only once
+    // Metodo para criacao de parametros para o Job
+
+    // primeiramente, adiciona-se um parametro para controle de unicidade
+    // (especificado na documentacao), o qual sera o proprio nome do arquivo. O
+    // identifier setado como true, garante esse controle
+
+    // O segundo parametro sera o path do arquivo. Diferente do nome do arquivo, o
+    // caminho pode variar. Portanto, nao sera utilizado para controle de unicidade
+    // - identifier false
+
+    public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {
+        return new JobParametersBuilder()
                 .addJobParameter("cnab", file.getOriginalFilename(), String.class, true)
-                // The second parameter is the file path, therefore, it will vary (unlike the name). Hence, it will not be chosen for uniqueness control - identifying: false
                 .addJobParameter("cnabFile", "file:" + targetLocation.toString(), String.class, false)
                 .toJobParameters();
-            return jobParameters;
     }
 
-    public void uploadFile(MultipartFile file) {
+    // Metodos para processamento de um ou mais arquivos. Mesma estrategia de
+    // encapsulamento do uploadFileInternal repetida para o processFileInternal
+
+    // Em processFileInternal, tenta-se parametrizar o Job corretamente. Apos a
+    // parametrizacao, o Job eh executado em jobLauncher.run(job, parameters)
+
+    public void processFile(MultipartFile file) {
+        Path targetLocation = uploadFileInternal(file);
+        processFileInternal(file, targetLocation);
+    }
+
+    public void processFiles(List<MultipartFile> files) {
+        List<Path> targetLocations = uploadCNABFiles(files);
+        for (int i = 0; i < files.size() - 1; i++) {
+            processFileInternal(files.get(i), targetLocations.get(i));
+        }
+    }
+
+    private void processFileInternal(MultipartFile file, Path targetLocation) {
         try {
-            Path targetLocation = uploadCNABFile(file);
-            // After being correctly parameterized, the job is executed
             JobParameters parameters = createJobParameters(file, targetLocation);
             jobLauncher.run(job, parameters);
         } catch (JobExecutionAlreadyRunningException alreadyRunningException) {
@@ -111,29 +128,7 @@ public class FileProcessingService {
         } catch (JobInstanceAlreadyCompleteException alreadyCompleteException) {
             throw new JInstanceAlreadyCompleteException();
         } catch (JobParametersInvalidException invalidParametersException) {
-            throw new JParametersInvalidException(); 
-        }
-
-    }
-
-    
-    public void uploadFiles(List<MultipartFile> files) {
-        try {
-            List<Path> targetLocations = uploadCNABFiles(files);
-            for (int i = 0; i < files.size() - 1; i++) {
-                // After being correctly parameterized, the job is executed
-                JobParameters parameters = createJobParameters(files.get(i), targetLocations.get(i));
-                jobLauncher.run(job, parameters);
-            }
-        } catch (JobExecutionAlreadyRunningException alreadyRunningException) {
-            throw new JAlreadyRunningException();
-        } catch (JobRestartException restartException) {
-            throw new JRestartException();
-        } catch (JobInstanceAlreadyCompleteException alreadyCompleteException) {
-            throw new JInstanceAlreadyCompleteException();
-        } catch (JobParametersInvalidException invalidParametersException) {
-            throw new JParametersInvalidException(); 
+            throw new JParametersInvalidException();
         }
     }
-
 }

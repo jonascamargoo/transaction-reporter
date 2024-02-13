@@ -26,7 +26,7 @@ public class FileProcessingController {
     @PostMapping("file")
     @CrossOrigin(origins="http://localhost:4002")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
-        fileProcessingService.uploadFile(file);
+        fileProcessingService.processFile(file);
         return "Processamento iniciado em background!";
     }
 
@@ -34,7 +34,7 @@ public class FileProcessingController {
     @PostMapping("files")
     @CrossOrigin(origins="http://localhost:4002")
     public String uploadFiles(@RequestParam("files") List<MultipartFile> files) {
-        fileProcessingService.uploadFiles(files);
+        fileProcessingService.processFiles(files);
         return "Processamento iniciado em background para " + files.size() + " arquivo(s)!";
     }
 
