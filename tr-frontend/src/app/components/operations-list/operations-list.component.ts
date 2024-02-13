@@ -22,7 +22,6 @@ export class OperationsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadOperations();
-    
   }
 
   loadOperations() {
@@ -45,6 +44,6 @@ export class OperationsListComponent implements OnInit {
     });
 
   }
-  
+
 }
 

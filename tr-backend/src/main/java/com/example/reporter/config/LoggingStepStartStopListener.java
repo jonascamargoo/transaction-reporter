@@ -1,11 +1,11 @@
-package com.example.reporter.services;
+package com.example.reporter.config;
 
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
 
-public class LoggingStepStartStopListenerService {
+public class LoggingStepStartStopListener {
     @BeforeStep
     public void beforeStep(StepExecution stepExecution) {
       System.out.println(stepExecution.getStepName() + " has begun!");

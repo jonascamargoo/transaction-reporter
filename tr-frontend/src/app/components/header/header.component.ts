@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -6,7 +5,6 @@ import { RouterLink } from '@angular/router';
   selector: 'app-header',
   standalone: true,
   imports: [
-    NgOptimizedImage,
     RouterLink
   ],
   templateUrl: './header.component.html',

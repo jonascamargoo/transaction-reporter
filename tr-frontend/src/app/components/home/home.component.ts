@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { AboutCNABComponent } from '../about-cnab/about-cnab.component';
 import { HeaderComponent } from '../header/header.component';
@@ -13,7 +12,6 @@ import { RouterLink } from '@angular/router';
   imports: [
     HeaderComponent,
     OperationsListComponent,
-    NgOptimizedImage,
     BtnSelectComponent,
     AboutCNABComponent,
     FooterComponent,

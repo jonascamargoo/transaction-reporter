@@ -40,9 +40,22 @@ export class BtnSelectComponent implements OnInit {
 
   // chamado quando um arquivo eh selecionado pelo usuario
   selectFile(event: any): void {
-    this.currentFile = event.target.files[0];
+    const file = event.target.files[0];
+    if(!this.isTxtFile(file)) {
+      this.message = "O arquivo precisa ser do tipo .txt"
+      return;
+    }
+    this.currentFile = file;
+    
   }
 
+  isTxtFile(file: File): boolean {
+    const allowedExtensions = ['txt'];
+    const extension = file.name.split('.').pop();
+    return allowedExtensions.includes(extension!.toLowerCase());
+  }
+
+  
   // chamado quando o usuario clica no botao de upload
   // Usamos currentFile para acessar o arquivo atual como o primeiro item. Em seguida, chamamos o método uploadService.upload() no currentFile
   // Se a transmissão for concluida, o evento sera um objeto HttpResponse. Neste momento, chamamos uploadService.listOperations() para obter as informações dos arquivos e atribuimos o resultado a variavel fileInfos

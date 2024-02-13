@@ -1,4 +1,4 @@
-package com.example.reporter.config.job;
+package com.example.reporter.config;
 
 import java.math.BigDecimal;
 
@@ -30,7 +30,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import com.example.reporter.entities.Operation;
 import com.example.reporter.entities.Remittance;
-import com.example.reporter.services.LoggingStepStartStopListenerService;
 import com.example.reporter.entities.OperationType;
 
 @Configuration
@@ -65,7 +64,7 @@ public class BatchConfig {
                 .reader(itemReader)
                 .processor(itemProcessor)
                 .writer(itemWriter)
-                .listener(new LoggingStepStartStopListenerService())
+                .listener(new LoggingStepStartStopListener())
                 .build();
     }
 
