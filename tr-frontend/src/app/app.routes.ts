@@ -5,6 +5,6 @@ import { OperationsListComponent } from './components/operations-list/operations
 
 export const routes: Routes = [
     { path: "", component: HomeComponent },
-    { path: "operacoes", component: OperationsListComponent },
+    { path: "simulacoes", component: OperationsListComponent },
     
 ];
