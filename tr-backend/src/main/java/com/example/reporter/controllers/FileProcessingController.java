@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.reporter.services.FileProcessingService;
 
-
 @RestController
 @RequestMapping("api/upload")
 public class FileProcessingController {
@@ -24,19 +23,19 @@ public class FileProcessingController {
 
     // curl -X POST -F "file=@CNAB.txt" http://localhost:8080/api/upload/file
     @PostMapping("file")
-    @CrossOrigin(origins="http://localhost:4002")
+    @CrossOrigin(origins = "http://localhost:4002")
     public String uploadFile(@RequestParam("file") MultipartFile file) {
         fileProcessingService.processFile(file);
         return "Processamento iniciado em background!";
     }
 
-    // curl -X POST -F "files=@file1.txt" -F "files=@file2.txt" http://localhost:8080/api/upload/files
+    // curl -X POST -F "files=@file1.txt" -F "files=@file2.txt"
+    // http://localhost:8080/api/upload/files
     @PostMapping("files")
-    @CrossOrigin(origins="http://localhost:4002")
+    @CrossOrigin(origins = "http://localhost:4002")
     public String uploadFiles(@RequestParam("files") List<MultipartFile> files) {
         fileProcessingService.processFiles(files);
         return "Processamento iniciado em background para " + files.size() + " arquivo(s)!";
     }
 
 }
-

@@ -31,10 +31,7 @@ import com.example.reporter.exceptions.customExceptions.JRestartException;
 public class FileProcessingService {
     private final Path fileStorageLocation;
 
-    // Since the job is annotated as a Bean in the configuration, Spring
-    // automatically runs the job upon initialization. Therefore, I will disable
-    // this behavior in application.properties. Later, I will signal it with
-    // @Qualifier("jobLauncherAsync")
+    // Como o Job foi anotado como Bean, o spring ira executa-lo automaticamente durante a inicializacao. Dito isso, esse comportamento sera desabilitado em application.properties, para entao sinaliza-lo com @Qualifier("jobLauncherAsync") - buscando um processamento async
 
     // async
     private final JobLauncher jobLauncher;
@@ -89,7 +86,7 @@ public class FileProcessingService {
     // identifier setado como true, garante esse controle
 
     // O segundo parametro sera o path do arquivo. Diferente do nome do arquivo, o
-    // caminho pode variar. Portanto, nao sera utilizado para controle de unicidade
+    // caminho pode variar, ou seja, se mudarmos o arquivo ja processado anteriormente, ele poderia ser processado de novo. Portanto, nao sera utilizado para controle de unicidade
     // - identifier false
 
     public JobParameters createJobParameters(MultipartFile file, Path targetLocation) {

@@ -22,13 +22,15 @@ public class OperationService {
     
     public List<OperationReport> listTotalsOperationsByStoreName() {
         var operations = operationRepository.findAllByOrderByOpStoreNameAscOpIdDesc();
-        // A LinkedHashMap, as we want to preserve the order, and a regular HashMap doesnt
+        // LinkedHashMap para preservar a ordem
         var reportMap = new LinkedHashMap<String, OperationReport>();
         
         operations.forEach(operation -> {
             String storeName = operation.opStoreName();
             BigDecimal value = operation.opValue();
-            // If the key exists, I keep it and add the balance. If not, it is initialized with a balance of 0
+            
+            // Se a chave existir, eu a mantenho e adiciono o saldo. Se não existir, ela é inicializada com um saldo de 0
+            
             reportMap.compute(storeName, (key, existingReport) -> {
                 var report = (existingReport != null) ? existingReport 
                     : new OperationReport(key, BigDecimal.ZERO, new ArrayList<>());
