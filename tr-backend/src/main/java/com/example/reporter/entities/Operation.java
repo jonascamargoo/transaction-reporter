@@ -10,16 +10,16 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 
 public record Operation(
-		// @Column para distinguir dos nomes reservados
-		@Id Long opId,
-		@Column("op_type") Integer opType,
-		@Column("op_date") Date opDate,
-		@Column("op_value") BigDecimal opValue,
-		@Column("op_cnpj") String opCnpj,
-		@Column("op_card") String opCard,
-		@Column("op_hour") Time opHour,
-		@Column("op_store_owner") String opStoreOwner,
-		@Column("op_store_name") String opStoreName) {
+	// @Column para distinguir dos nomes reservados
+	@Id Long opId,
+	@Column("op_type") Integer opType,
+	@Column("op_date") Date opDate,
+	@Column("op_value") BigDecimal opValue,
+	@Column("op_cnpj") String opCnpj,
+	@Column("op_card") String opCard,
+	@Column("op_hour") Time opHour,
+	@Column("op_store_owner") String opStoreOwner,
+	@Column("op_store_name") String opStoreName) {
 
 	// Design Pattern: Wither
 
