@@ -24,6 +24,6 @@ services:
       context: ./tr-frontend
       dockerfile: Dockerfile
     ports:
-      -"4002:4002"
+      - "4002:4002"
     depends_on:
       - spring-app
