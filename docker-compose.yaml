@@ -11,7 +11,7 @@ services:
       - POSTGRES_PASSWORD={PG_PASSWORD}
   
   spring-app:
-    image: transaction-reporter:latest
+    image: backend-transaction-reporter:latest
     ports:
       - "8080:8080"
     environment:
@@ -22,7 +22,7 @@ services:
   angular-app:
     build:
       context: ./tr-frontend
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
     ports:
       -"4002:4002"
     depends_on:
