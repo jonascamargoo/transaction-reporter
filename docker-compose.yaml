@@ -4,25 +4,16 @@ services:
   postgres-db:
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "5433:5432"
     env_file:
       - .env
-    environment:
-      - POSTGRES_DB=transaction-reporter
-      - POSTGRES_USER=${PG_USER}
-      - POSTGRES_PASSWORD=${PG_PASSWORD}
-  
+    
   spring-app:
     image: backend-transaction-reporter:latest
     ports:
       - "8080:8080"
     env_file:
       - .env
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/transaction-reporter
-      - SPRING_DATASOURCE_USERNAME=${PG_USER}
-      - SPRING_DATASOURCE_PASSWORD=${PG_PASSWORD}
-      # SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/transaction-reporter
     depends_on:
       - postgres-db
     
