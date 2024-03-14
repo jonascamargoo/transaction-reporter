@@ -35,8 +35,7 @@ import com.example.reporter.entities.OperationType;
 @Configuration
 public class BatchConfig {
   private PlatformTransactionManager platformTransactionManager;
-  // Jobs are based on state machines. The metadata for each step resides in the
-  // jobRepository.
+  // Jobs sao baseados em maquinas de estado - o metadado para cada step fica armazenado em jobRepository
   private JobRepository jobRepository;
 
   public BatchConfig(PlatformTransactionManager platformTransactionManager, JobRepository jobRepository) {
@@ -143,8 +142,7 @@ public class BatchConfig {
                 :opType, :opDate, :opValue, :opCnpj, :opCard, :opHour, :opStoreOwner, :opStoreName
             )
             """)
-        // I added placeholders with the same name to use beanMapped for
-        // automatically filling in the value of the received operation
+        //Adicionei espaços reservados com o mesmo nome para usar beanMapped e preencher automaticamente o valor da operação recebida
         .beanMapped()
         .build();
   }

@@ -23,13 +23,6 @@ public record Operation(
 
 	// Design Pattern: Wither
 
-	// public Operation withValor(BigDecimal valor) {
-	// 	return new Operation(
-	// 			opId, opType, opDate,
-	// 			opValue, opCnpj, opCard,
-	// 			opHour, opStoreOwner, opStoreName);
-	// }
-
 	public Operation withDate(String date) throws ParseException {
 		var dateFormat = new SimpleDateFormat("yyyyMMdd");
 		var parsedDate = dateFormat.parse(date);

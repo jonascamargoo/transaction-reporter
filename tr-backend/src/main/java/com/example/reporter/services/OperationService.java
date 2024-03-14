@@ -1,6 +1,5 @@
 package com.example.reporter.services;
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -13,7 +12,6 @@ import com.example.reporter.repository.OperationRepository;
 
 @Service
 public class OperationService {
-
     private final OperationRepository operationRepository;
     
     public OperationService(OperationRepository operationRepository) {
@@ -39,8 +37,5 @@ public class OperationService {
             });
         });
         return new ArrayList<>(reportMap.values());
-
-    }
-        
-
+    }      
 }
