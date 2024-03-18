@@ -20,7 +20,7 @@ public enum OperationType {
 		return switch (type) {
 			// credito -> soma
 			case 1, 4, 5, 6, 7, 8 -> new BigDecimal(1);
-			// debito -> subtrcao
+			// debito -> sub
 			case 2, 3, 9 -> new BigDecimal(-1);
 			default -> new BigDecimal(0);
 		};
