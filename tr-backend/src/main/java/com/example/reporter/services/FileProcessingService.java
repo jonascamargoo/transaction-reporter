@@ -66,9 +66,8 @@ public class FileProcessingService {
 
     private Path uploadFileInternal(MultipartFile file) {
         // file = "special%characters.txt" -> "specialcharacters.txt"
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        // get final destination
-        Path targetLocation = fileStorageLocation.resolve(fileName);
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // CNAB.txt
+        Path targetLocation = fileStorageLocation.resolve(fileName); // get final destination
         try {
             file.transferTo(targetLocation);
         } catch (IllegalStateException stateException) {
