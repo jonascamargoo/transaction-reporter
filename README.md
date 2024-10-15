@@ -4,8 +4,9 @@ A ideia central do projeto foi criar um software capaz de automatizar a leitura,
 
 Paralelo a isso, utilizei o projeto para aprender sobre o uso do spring batch e o processamento de dados em lotes, recomendado em sistemas que realizam tarefas com alto volume de dados. Processamento em lote é uma técnica de execução de tarefas de processamento de dados em grandes quantidades, agrupadas em lotes, que são processadas de forma contínua ou sequencial. Em vez de processar cada tarefa individualmente assim que ela é recebida, o processamento em lote agrupa várias tarefas ou transações e as executa de uma só vez em um momento específico. Esse tipo de técnica era bastante utilizada na segunda geração de computadores (1955 - 1965), adequando-se ao cenário limitado da época. Um exemplo de leitura, processamento e escrita pode ser vista na imagem a seguir, a partir de três modelos IBM 1401, 7094 e 1401:
 
-![image](https://github.com/user-attachments/assets/12eb29a1-718e-4007-94e5-4f0403294425)
+![image](https://github.com/user-attachments/assets/b21ec25c-8257-4fd5-80f1-0fc573a530a7)
 
+Tanenbaum, Andrew S., and Albert S. Woodhull. Sistemas Operacionais: Projetjos e Implementaçao. Bookman Editora, 2009.
 
 ### Tecnologias utilizadas
 Para a realização do projeto, utilizei Spring Boot no backend da aplicação e Postgresql como banco de dados. O arquivo pode ser enviado diretamente pelo backend, lidando com um ou mais arquivos por vez, porém também foi disponibilizada um frontend em angular para melhor disposição visual dos relatórios.
